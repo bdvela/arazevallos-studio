@@ -16,6 +16,7 @@ import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { WhatsAppButton } from "@/components/whatsapp-button";
 import { InitialLoader } from "@/components/initial-loader";
+import { ScrollToTop } from "@/components/scroll-to-top";
 
 export const metadata: Metadata = {
   title: "Ara Zevallos Studio | Belleza Premium en Huánuco",
@@ -42,6 +43,7 @@ export default function RootLayout({
         style={{ fontFamily: 'var(--font-inter), system-ui, sans-serif' }}
       >
         <InitialLoader />
+        <ScrollToTop />
         <Navbar />
         <main className="min-h-screen">
           {children}

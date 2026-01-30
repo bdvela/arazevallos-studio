@@ -67,6 +67,7 @@ export function Navbar() {
                             >
                                 <Link
                                     href={link.href}
+                                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                                     className="relative text-sm font-medium text-[#3D3D3D] hover:text-[#D4847C] transition-colors group"
                                 >
                                     {link.label}
@@ -181,7 +182,10 @@ export function Navbar() {
                                 >
                                     <Link
                                         href={link.href}
-                                        onClick={() => setIsMenuOpen(false)}
+                                        onClick={() => {
+                                            setIsMenuOpen(false);
+                                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                                        }}
                                         className="block py-3 text-lg font-medium text-[#3D3D3D] hover:text-[#D4847C] hover:pl-2 transition-all"
                                     >
                                         {link.label}
