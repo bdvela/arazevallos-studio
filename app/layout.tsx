@@ -14,6 +14,8 @@ const playfair = Playfair_Display({
 
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { WhatsAppButton } from "@/components/whatsapp-button";
+import { InitialLoader } from "@/components/initial-loader";
 
 export const metadata: Metadata = {
   title: "Ara Zevallos Studio | Belleza Premium en Huánuco",
@@ -39,11 +41,13 @@ export default function RootLayout({
         className={`${inter.variable} ${playfair.variable} antialiased`}
         style={{ fontFamily: 'var(--font-inter), system-ui, sans-serif' }}
       >
+        <InitialLoader />
         <Navbar />
         <main className="min-h-screen">
           {children}
         </main>
         <Footer />
+        <WhatsAppButton />
       </body>
     </html>
   );

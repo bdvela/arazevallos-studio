@@ -1,5 +1,8 @@
-import { Sparkles, Star, Heart, Palette, Eye, Scissors, MessageCircle, FootprintsIcon, EyeClosed, EyeClosedIcon, EyeOff, ScanEye, LucideEye, LucideEyeClosed, EyeIcon, Sparkle } from "lucide-react";
-import { Glegoo } from "next/font/google";
+'use client';
+
+import { Sparkles, Star, Heart, Palette, Eye, Scissors, MessageCircle, FootprintsIcon, EyeClosed } from "lucide-react";
+import { motion } from "framer-motion";
+import { FadeInUp, StaggerContainer, StaggerItem } from "@/components/ui/motion";
 
 const services = [
     {
@@ -11,7 +14,7 @@ const services = [
     {
         title: "Uñas Rubber Gel",
         description: "Sistema flexible y resistente que cuida tus uñas naturales. Ideal para quienes buscan una opción más gentil con acabado natural.",
-        icon: Sparkle,
+        icon: Star,
         features: ["Flexible y resistente", "Cuida tus uñas", "Acabado natural"],
     },
     {
@@ -44,67 +47,94 @@ export default function ServicesPage() {
     return (
         <div className="bg-[#FFFBFC]">
             {/* Hero */}
-            <section className="pt-32 pb-16 bg-gradient-to-br from-[#FDE8EE] via-[#FFFBFC] to-white">
+            <section className="pt-32 pb-16 bg-gradient-to-br from-[#FDE8EE] via-[#FFFBFC] to-white overflow-hidden">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-                    <span className="text-[#D4847C] text-sm font-medium uppercase tracking-wider">
+                    <motion.span
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                        className="text-[#D4847C] text-sm font-medium uppercase tracking-wider inline-block"
+                    >
                         Nuestros Servicios
-                    </span>
-                    <h1 className="mt-4 text-4xl md:text-5xl font-bold text-[#3D3D3D]" style={{ fontFamily: 'var(--font-playfair), serif' }}>
+                    </motion.span>
+                    <motion.h1
+                        initial={{ opacity: 0, y: 30 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.1 }}
+                        className="mt-4 text-4xl md:text-5xl font-bold text-[#3D3D3D]"
+                        style={{ fontFamily: 'var(--font-playfair), serif' }}
+                    >
                         Experiencia{" "}
                         <span className="text-[#D4847C] italic">Premium</span>{" "}
                         en Belleza
-                    </h1>
-                    <p className="mt-6 text-lg text-[#6B6B6B] max-w-2xl mx-auto">
+                    </motion.h1>
+                    <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.2 }}
+                        className="mt-6 text-lg text-[#6B6B6B] max-w-2xl mx-auto"
+                    >
                         Cada servicio está diseñado para realzar tu belleza natural con técnicas profesionales y productos de alta calidad.
-                    </p>
+                    </motion.p>
                 </div>
             </section>
 
             {/* Services Grid */}
             <section className="py-20">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {services.map((service) => (
-                            <div
-                                key={service.title}
-                                className="group bg-white rounded-3xl p-8 border border-[#F5B5C8]/30 hover:border-[#D4847C]/50 hover:shadow-2xl transition-all duration-300"
-                            >
-                                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#F5B5C8] to-[#FDE8EE] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                                    <service.icon className="w-8 h-8 text-[#D4847C]" />
-                                </div>
+                            <StaggerItem key={service.title}>
+                                <motion.div
+                                    whileHover={{
+                                        y: -8,
+                                        boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.1)"
+                                    }}
+                                    transition={{ duration: 0.3 }}
+                                    className="group bg-white rounded-3xl p-8 border border-[#F5B5C8]/30 hover:border-[#D4847C]/50 transition-colors h-full"
+                                >
+                                    <motion.div
+                                        whileHover={{ scale: 1.1, rotate: 5 }}
+                                        className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#F5B5C8] to-[#FDE8EE] flex items-center justify-center mb-6"
+                                    >
+                                        <service.icon className="w-8 h-8 text-[#D4847C]" />
+                                    </motion.div>
 
-                                <h3 className="text-2xl font-bold text-[#3D3D3D] mb-4" style={{ fontFamily: 'var(--font-playfair), serif' }}>
-                                    {service.title}
-                                </h3>
+                                    <h3 className="text-2xl font-bold text-[#3D3D3D] mb-4" style={{ fontFamily: 'var(--font-playfair), serif' }}>
+                                        {service.title}
+                                    </h3>
 
-                                <p className="text-[#6B6B6B] mb-6 leading-relaxed">
-                                    {service.description}
-                                </p>
+                                    <p className="text-[#6B6B6B] mb-6 leading-relaxed">
+                                        {service.description}
+                                    </p>
 
-                                <ul className="space-y-2">
-                                    {service.features.map((feature) => (
-                                        <li key={feature} className="flex items-center gap-2 text-sm text-[#6B6B6B]">
-                                            <span className="w-1.5 h-1.5 rounded-full bg-[#D4847C]" />
-                                            {feature}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
+                                    <ul className="space-y-2">
+                                        {service.features.map((feature) => (
+                                            <li key={feature} className="flex items-center gap-2 text-sm text-[#6B6B6B]">
+                                                <span className="w-1.5 h-1.5 rounded-full bg-[#D4847C]" />
+                                                {feature}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </motion.div>
+                            </StaggerItem>
                         ))}
-                    </div>
+                    </StaggerContainer>
                 </div>
             </section>
 
             {/* CTA */}
             <section className="py-20 bg-gradient-to-r from-[#D4847C] to-[#E8A0B0]">
-                <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+                <FadeInUp className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
                     <h2 className="text-3xl md:text-4xl font-bold text-white mb-6" style={{ fontFamily: 'var(--font-playfair), serif' }}>
                         ¿Lista para tu cita?
                     </h2>
                     <p className="text-white/90 text-lg mb-8">
                         Agenda tu cita por WhatsApp y vive la experiencia Ara Zevallos Studio
                     </p>
-                    <a
+                    <motion.a
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.98 }}
                         href="https://wa.link/b5c2z6"
                         target="_blank"
                         rel="noopener noreferrer"
@@ -112,8 +142,8 @@ export default function ServicesPage() {
                     >
                         <MessageCircle className="w-5 h-5" />
                         Reservar por WhatsApp
-                    </a>
-                </div>
+                    </motion.a>
+                </FadeInUp>
             </section>
         </div>
     );

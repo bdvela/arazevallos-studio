@@ -1,6 +1,11 @@
+'use client';
+
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Clock, Sparkles, Truck, Heart, Check, Palette, Shield } from "lucide-react";
+import { motion } from "framer-motion";
+import { FadeInUp, ScaleIn, SlideInLeft, SlideInRight, StaggerContainer, StaggerItem } from "@/components/ui/motion";
+import { FAQSection } from "@/components/faq";
 
 const benefits = [
     {
@@ -59,40 +64,91 @@ export default function PressOnPage() {
             {/* Hero */}
             <section className="relative min-h-[90vh] flex items-center overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-[#FDE8EE] via-[#FFFBFC] to-[#E8F4F8]" />
-                <div className="absolute top-20 right-10 w-72 h-72 bg-[#7EC8E3]/30 rounded-full blur-3xl" />
-                <div className="absolute bottom-20 left-10 w-96 h-96 bg-[#F5B5C8]/30 rounded-full blur-3xl" />
+                <motion.div
+                    animate={{
+                        scale: [1, 1.1, 1],
+                        opacity: [0.3, 0.4, 0.3]
+                    }}
+                    transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                    className="absolute top-20 right-10 w-72 h-72 bg-[#7EC8E3]/30 rounded-full blur-3xl"
+                />
+                <motion.div
+                    animate={{
+                        scale: [1, 1.15, 1],
+                        opacity: [0.3, 0.4, 0.3]
+                    }}
+                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                    className="absolute bottom-20 left-10 w-96 h-96 bg-[#F5B5C8]/30 rounded-full blur-3xl"
+                />
 
                 <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-32">
                     <div className="grid lg:grid-cols-2 gap-16 items-center">
                         <div className="space-y-8">
-                            <span className="inline-block py-2 px-4 rounded-full bg-[#7EC8E3]/20 text-[#3D3D3D] text-sm font-medium">
+                            <motion.span
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5 }}
+                                className="inline-block py-2 px-4 rounded-full bg-[#7EC8E3]/20 text-[#3D3D3D] text-sm font-medium"
+                            >
                                 🚀 Nuevo Producto
-                            </span>
+                            </motion.span>
 
-                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#3D3D3D] leading-tight" style={{ fontFamily: 'var(--font-playfair), serif' }}>
+                            <motion.h1
+                                initial={{ opacity: 0, y: 30 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.6, delay: 0.1 }}
+                                className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#3D3D3D] leading-tight"
+                                style={{ fontFamily: 'var(--font-playfair), serif' }}
+                            >
                                 Press-On Nails para mujeres que{" "}
                                 <span className="text-[#D4847C] italic">valoran su tiempo</span>
-                            </h1>
+                            </motion.h1>
 
-                            <p className="text-xl text-[#6B6B6B] leading-relaxed">
+                            <motion.p
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, delay: 0.2 }}
+                                className="text-xl text-[#6B6B6B] leading-relaxed"
+                            >
                                 ¿Tu agenda no te permite ir al salón? Nuestras uñas press-on te dan el look profesional
                                 que mereces, lista en minutos, sin salir de casa.
-                            </p>
+                            </motion.p>
 
-                            <div className="flex flex-col sm:flex-row gap-4">
-                                <Link href="/shop" className="btn-primary inline-flex items-center justify-center gap-2 text-lg px-8 py-4">
-                                    Ver Diseños
-                                    <ArrowRight className="w-5 h-5" />
-                                </Link>
-                                <a href="#como-funciona" className="btn-secondary inline-flex items-center justify-center gap-2 text-lg">
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, delay: 0.3 }}
+                                className="flex flex-col sm:flex-row gap-4"
+                            >
+                                <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
+                                    <Link href="/shop" className="btn-primary inline-flex items-center justify-center gap-2 text-lg px-8 py-4">
+                                        Ver Diseños
+                                        <ArrowRight className="w-5 h-5" />
+                                    </Link>
+                                </motion.div>
+                                <motion.a
+                                    whileHover={{ scale: 1.03 }}
+                                    whileTap={{ scale: 0.98 }}
+                                    href="#como-funciona"
+                                    className="btn-secondary inline-flex items-center justify-center gap-2 text-lg"
+                                >
                                     ¿Cómo Funciona?
-                                </a>
-                            </div>
+                                </motion.a>
+                            </motion.div>
                         </div>
 
-                        <div className="relative">
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.8, delay: 0.2 }}
+                            className="relative"
+                        >
                             <div className="relative aspect-square max-w-lg mx-auto">
-                                <div className="absolute -inset-4 bg-gradient-to-br from-[#D4847C] to-[#7EC8E3] rounded-3xl opacity-20 blur-xl" />
+                                <motion.div
+                                    animate={{ rotate: [0, 2, 0, -2, 0] }}
+                                    transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+                                    className="absolute -inset-4 bg-gradient-to-br from-[#D4847C] to-[#7EC8E3] rounded-3xl opacity-20 blur-xl"
+                                />
                                 <div className="relative h-full w-full rounded-3xl overflow-hidden bg-white shadow-2xl">
                                     <Image
                                         src="/images/ara/ara-products.jpg"
@@ -103,7 +159,7 @@ export default function PressOnPage() {
                                     />
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
                     </div>
                 </div>
             </section>
@@ -111,87 +167,121 @@ export default function PressOnPage() {
             {/* Problem/Solution */}
             <section className="py-24 bg-white">
                 <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-                    <h2 className="text-3xl md:text-4xl font-bold text-[#3D3D3D] mb-8" style={{ fontFamily: 'var(--font-playfair), serif' }}>
-                        ¿Te suena familiar?
-                    </h2>
-                    <div className="grid md:grid-cols-2 gap-8 text-left mb-12">
-                        <div className="p-6 bg-red-50 rounded-2xl border border-red-100">
-                            <p className="text-[#6B6B6B] italic">"Quiero uñas bonitas pero no tengo 2-3 horas para ir al salón..."</p>
-                        </div>
-                        <div className="p-6 bg-red-50 rounded-2xl border border-red-100">
-                            <p className="text-[#6B6B6B] italic">"Cuando finalmente tengo tiempo, no hay citas disponibles..."</p>
-                        </div>
-                        <div className="p-6 bg-red-50 rounded-2xl border border-red-100">
-                            <p className="text-[#6B6B6B] italic">"Me preocupa dañar mis uñas naturales..."</p>
-                        </div>
-                        <div className="p-6 bg-red-50 rounded-2xl border border-red-100">
-                            <p className="text-[#6B6B6B] italic">"No vivo en una ciudad grande con buenos salones..."</p>
-                        </div>
-                    </div>
-                    <div className="p-8 bg-gradient-to-br from-[#FDE8EE] to-white rounded-3xl border border-[#F5B5C8]">
-                        <p className="text-xl text-[#3D3D3D] font-medium">
-                            Las <span className="text-[#D4847C] font-bold">Press-On Nails</span> de Ara Zevallos Studio
-                            son la solución perfecta. Calidad de salón, en tus manos, cuando tú quieras.
-                        </p>
-                    </div>
+                    <FadeInUp>
+                        <h2 className="text-3xl md:text-4xl font-bold text-[#3D3D3D] mb-8" style={{ fontFamily: 'var(--font-playfair), serif' }}>
+                            ¿Te suena familiar?
+                        </h2>
+                    </FadeInUp>
+                    <StaggerContainer className="grid md:grid-cols-2 gap-8 text-left mb-12">
+                        {[
+                            "Quiero uñas bonitas pero no tengo 2-3 horas para ir al salón...",
+                            "Cuando finalmente tengo tiempo, no hay citas disponibles...",
+                            "Me preocupa dañar mis uñas naturales...",
+                            "No vivo en una ciudad grande con buenos salones..."
+                        ].map((text, index) => (
+                            <StaggerItem key={index}>
+                                <motion.div
+                                    whileHover={{ scale: 1.02 }}
+                                    className="p-6 bg-red-50 rounded-2xl border border-red-100"
+                                >
+                                    <p className="text-[#6B6B6B] italic">"{text}"</p>
+                                </motion.div>
+                            </StaggerItem>
+                        ))}
+                    </StaggerContainer>
+                    <FadeInUp delay={0.3}>
+                        <motion.div
+                            whileHover={{ scale: 1.01 }}
+                            className="p-8 bg-gradient-to-br from-[#FDE8EE] to-white rounded-3xl border border-[#F5B5C8]"
+                        >
+                            <p className="text-xl text-[#3D3D3D] font-medium">
+                                Las <span className="text-[#D4847C] font-bold">Press-On Nails</span> de Ara Zevallos Studio
+                                son la solución perfecta. Calidad de salón, en tus manos, cuando tú quieras.
+                            </p>
+                        </motion.div>
+                    </FadeInUp>
                 </div>
             </section>
 
             {/* Benefits */}
             <section className="py-24 bg-[#FFFBFC]">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-16">
+                    <FadeInUp className="text-center mb-16">
                         <span className="text-[#D4847C] text-sm font-medium uppercase tracking-wider">
                             Ventajas
                         </span>
                         <h2 className="mt-3 text-3xl md:text-4xl font-bold text-[#3D3D3D]" style={{ fontFamily: 'var(--font-playfair), serif' }}>
                             ¿Por qué Press-On?
                         </h2>
-                    </div>
+                    </FadeInUp>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {benefits.map((benefit) => (
-                            <div key={benefit.title} className="flex gap-4 p-6 bg-white rounded-2xl border border-[#F5B5C8]/30">
-                                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#F5B5C8] to-[#FDE8EE] flex items-center justify-center flex-shrink-0">
-                                    <benefit.icon className="w-6 h-6 text-[#D4847C]" />
-                                </div>
-                                <div>
-                                    <h3 className="font-bold text-[#3D3D3D] mb-2">{benefit.title}</h3>
-                                    <p className="text-sm text-[#6B6B6B] leading-relaxed">{benefit.description}</p>
-                                </div>
-                            </div>
+                            <StaggerItem key={benefit.title}>
+                                <motion.div
+                                    whileHover={{ y: -5, boxShadow: "0 10px 40px -10px rgba(0,0,0,0.1)" }}
+                                    className="flex gap-4 p-6 bg-white rounded-2xl border border-[#F5B5C8]/30"
+                                >
+                                    <motion.div
+                                        whileHover={{ scale: 1.1, rotate: 5 }}
+                                        className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#F5B5C8] to-[#FDE8EE] flex items-center justify-center flex-shrink-0"
+                                    >
+                                        <benefit.icon className="w-6 h-6 text-[#D4847C]" />
+                                    </motion.div>
+                                    <div>
+                                        <h3 className="font-bold text-[#3D3D3D] mb-2">{benefit.title}</h3>
+                                        <p className="text-sm text-[#6B6B6B] leading-relaxed">{benefit.description}</p>
+                                    </div>
+                                </motion.div>
+                            </StaggerItem>
                         ))}
-                    </div>
+                    </StaggerContainer>
                 </div>
             </section>
 
             {/* How it Works */}
             <section id="como-funciona" className="py-24 bg-white scroll-mt-24">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-16">
+                    <FadeInUp className="text-center mb-16">
                         <span className="text-[#D4847C] text-sm font-medium uppercase tracking-wider">
                             Proceso Simple
                         </span>
                         <h2 className="mt-3 text-3xl md:text-4xl font-bold text-[#3D3D3D]" style={{ fontFamily: 'var(--font-playfair), serif' }}>
                             ¿Cómo Funciona?
                         </h2>
-                    </div>
+                    </FadeInUp>
 
                     <div className="grid md:grid-cols-3 gap-8">
                         {steps.map((step, index) => (
-                            <div key={step.number} className="relative text-center">
-                                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-[#D4847C] to-[#E8A0B0] flex items-center justify-center mx-auto mb-6">
+                            <motion.div
+                                key={step.number}
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ delay: index * 0.2 }}
+                                className="relative text-center"
+                            >
+                                <motion.div
+                                    whileHover={{ scale: 1.1 }}
+                                    className="w-20 h-20 rounded-full bg-gradient-to-br from-[#D4847C] to-[#E8A0B0] flex items-center justify-center mx-auto mb-6"
+                                >
                                     <span className="text-2xl font-bold text-white">{step.number}</span>
-                                </div>
+                                </motion.div>
                                 <h3 className="text-xl font-bold text-[#3D3D3D] mb-3" style={{ fontFamily: 'var(--font-playfair), serif' }}>
                                     {step.title}
                                 </h3>
                                 <p className="text-[#6B6B6B]">{step.description}</p>
 
                                 {index < steps.length - 1 && (
-                                    <div className="hidden md:block absolute top-10 left-[60%] w-[80%] h-0.5 bg-gradient-to-r from-[#F5B5C8] to-transparent" />
+                                    <motion.div
+                                        initial={{ scaleX: 0 }}
+                                        whileInView={{ scaleX: 1 }}
+                                        viewport={{ once: true }}
+                                        transition={{ delay: 0.5 + index * 0.2, duration: 0.5 }}
+                                        className="hidden md:block absolute top-10 left-[60%] w-[80%] h-0.5 bg-gradient-to-r from-[#F5B5C8] to-transparent origin-left"
+                                    />
                                 )}
-                            </div>
+                            </motion.div>
                         ))}
                     </div>
                 </div>
@@ -200,53 +290,70 @@ export default function PressOnPage() {
             {/* What's Included */}
             <section className="py-24 bg-gradient-to-br from-[#FDE8EE] via-white to-[#E8F4F8]">
                 <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-12">
+                    <FadeInUp className="text-center mb-12">
                         <h2 className="text-3xl md:text-4xl font-bold text-[#3D3D3D]" style={{ fontFamily: 'var(--font-playfair), serif' }}>
                             ¿Qué incluye tu kit?
                         </h2>
-                    </div>
+                    </FadeInUp>
 
-                    <div className="bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-[#F5B5C8]/30">
-                        <div className="grid md:grid-cols-2 gap-6">
-                            {[
-                                "Set de 10 uñas en tu talla personalizada",
-                                "Pegamento profesional de alta duración",
-                                "Lima para preparación",
-                                "Palito de naranjo",
-                                "Instrucciones de aplicación y cuidado",
-                                "Tips para mayor duración",
-                                "Estuche de almacenamiento",
-                                "Soporte post-venta por WhatsApp",
-                            ].map((item) => (
-                                <div key={item} className="flex items-center gap-3">
-                                    <div className="w-6 h-6 rounded-full bg-[#D4847C] flex items-center justify-center flex-shrink-0">
-                                        <Check className="w-4 h-4 text-white" />
-                                    </div>
-                                    <span className="text-[#3D3D3D]">{item}</span>
-                                </div>
-                            ))}
+                    <ScaleIn>
+                        <div className="bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-[#F5B5C8]/30">
+                            <div className="grid md:grid-cols-2 gap-6">
+                                {[
+                                    "Set de 10 uñas en tu talla personalizada",
+                                    "Pegamento profesional de alta duración",
+                                    "Lima para preparación",
+                                    "Palito de naranjo",
+                                    "Instrucciones de aplicación y cuidado",
+                                    "Tips para mayor duración",
+                                    "Estuche de almacenamiento",
+                                    "Soporte post-venta por WhatsApp",
+                                ].map((item, index) => (
+                                    <motion.div
+                                        key={item}
+                                        initial={{ opacity: 0, x: -20 }}
+                                        whileInView={{ opacity: 1, x: 0 }}
+                                        viewport={{ once: true }}
+                                        transition={{ delay: index * 0.05 }}
+                                        className="flex items-center gap-3"
+                                    >
+                                        <motion.div
+                                            whileHover={{ scale: 1.2 }}
+                                            className="w-6 h-6 rounded-full bg-[#D4847C] flex items-center justify-center flex-shrink-0"
+                                        >
+                                            <Check className="w-4 h-4 text-white" />
+                                        </motion.div>
+                                        <span className="text-[#3D3D3D]">{item}</span>
+                                    </motion.div>
+                                ))}
+                            </div>
                         </div>
-                    </div>
+                    </ScaleIn>
                 </div>
             </section>
 
+            {/* FAQ Section */}
+            <FAQSection />
+
             {/* CTA */}
             <section className="py-24 bg-gradient-to-r from-[#D4847C] to-[#E8A0B0]">
-                <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
+                <FadeInUp className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
                     <h2 className="text-3xl md:text-4xl font-bold text-white mb-6" style={{ fontFamily: 'var(--font-playfair), serif' }}>
                         ¿Lista para tener uñas perfectas sin salir de casa?
                     </h2>
                     <p className="text-white/90 text-lg mb-8 max-w-2xl mx-auto">
                         Explora nuestra colección de diseños y encuentra tu match perfecto.
                     </p>
-                    <Link
-                        href="/shop"
-                        className="inline-flex items-center gap-2 bg-white text-[#D4847C] px-10 py-5 rounded-full font-semibold hover:bg-[#FFFBFC] transition-colors text-lg"
-                    >
-                        Ver Diseños Disponibles
-                        <ArrowRight className="w-5 h-5" />
-                    </Link>
-                </div>
+                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
+                        <Link
+                            href="/shop"
+                            className="inline-flex items-center gap-2 bg-white text-[#D4847C] px-10 py-5 rounded-full font-semibold hover:bg-[#FFFBFC] transition-colors text-lg"
+                        >
+                            Ver Diseños Disponibles
+                            <ArrowRight className="w-5 h-5" />
+                        </Link>
+                    </motion.div>
+                </FadeInUp>
             </section>
         </div>
     );
