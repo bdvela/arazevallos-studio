@@ -251,7 +251,7 @@ export function HomeClient({ products }: HomeClientProps) {
                                 <div className="space-y-4">
                                     <ScaleIn className="aspect-square rounded-2xl overflow-hidden bg-[#F5B5C8]/20">
                                         <Image
-                                            src="/images/ara/ara-products.jpg"
+                                            src="/images/ara/press-on.png"
                                             alt="Productos Ara Zevallos"
                                             width={300}
                                             height={300}
@@ -286,7 +286,7 @@ export function HomeClient({ products }: HomeClientProps) {
                                     </motion.div>
                                     <ScaleIn delay={0.4} className="aspect-square rounded-2xl overflow-hidden bg-[#F5B5C8]/20">
                                         <Image
-                                            src="/images/ara/tools.jpg"
+                                            src="/images/ara/kit-press-on.png"
                                             alt="Ara en su studio"
                                             width={300}
                                             height={300}
@@ -304,8 +304,8 @@ export function HomeClient({ products }: HomeClientProps) {
                             </span>
 
                             <h2 className="text-3xl md:text-4xl font-bold text-[#3D3D3D]" style={{ fontFamily: 'var(--font-playfair), serif' }}>
-                                Press-On Nails para quienes{" "}
-                                <span className="text-[#D4847C]">valoran su tiempo</span>
+                                Press-On Nails: Look de salón {" "}
+                                <span className="text-[#D4847C]">sin salir de casa</span>
                             </h2>
 
                             <p className="text-lg text-[#6B6B6B] leading-relaxed">
@@ -366,7 +366,7 @@ export function HomeClient({ products }: HomeClientProps) {
                                     Tienda Online
                                 </span>
                                 <h2 className="mt-3 text-3xl md:text-4xl font-bold text-[#3D3D3D]" style={{ fontFamily: 'var(--font-playfair), serif' }}>
-                                    Diseños Destacados
+                                    Adquiere tus uñas press-on
                                 </h2>
                             </div>
                             <motion.div whileHover={{ x: 5 }}>
