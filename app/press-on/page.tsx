@@ -60,7 +60,7 @@ const steps = [
 
 export default function PressOnPage() {
     return (
-        <div className="bg-[#FFFBFC]">
+        <div className="bg-[#FFFBFC] overflow-x-hidden">
             {/* Hero */}
             <section className="relative min-h-[90vh] flex items-center overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-[#FDE8EE] via-[#FFFBFC] to-[#E8F4F8]" />

@@ -45,7 +45,7 @@ const services = [
 
 export default function ServicesPage() {
     return (
-        <div className="bg-[#FFFBFC]">
+        <div className="bg-[#FFFBFC] overflow-x-hidden">
             {/* Hero */}
             <section className="pt-32 pb-16 bg-gradient-to-br from-[#FDE8EE] via-[#FFFBFC] to-white overflow-hidden">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
