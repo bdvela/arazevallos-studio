@@ -41,6 +41,14 @@ const services = [
     },
 ];
 
+// Collection config for product badges
+const collectionConfig: Record<string, { icon: string; color: string; gradient: string }> = {
+    'coleccion-trendy-disenos-en-tendencia': { icon: '🔥', color: '#FF6B6B', gradient: 'from-[#FF6B6B] to-[#FF8E8E]' },
+    'coleccion-luxury-elegancia-premium': { icon: '👑', color: '#9B59B6', gradient: 'from-[#9B59B6] to-[#B07CC6]' },
+    'coleccion-essential': { icon: '💖', color: '#E91E8C', gradient: 'from-[#E91E8C] to-[#F06BA8]' },
+    'press-on-personalizados-disenados-para-ti': { icon: '✨', color: '#7EC8E3', gradient: 'from-[#7EC8E3] to-[#A8D8EA]' },
+};
+
 interface HomeClientProps {
     products: any[];
 }
@@ -383,7 +391,7 @@ export function HomeClient({ products }: HomeClientProps) {
                             {products.map((product) => (
                                 <StaggerItem key={product.id}>
                                     <motion.div whileHover={{ y: -5 }} transition={{ duration: 0.2 }}>
-                                        <ProductCard product={product} />
+                                        <ProductCard product={product} collectionConfig={collectionConfig} />
                                     </motion.div>
                                 </StaggerItem>
                             ))}

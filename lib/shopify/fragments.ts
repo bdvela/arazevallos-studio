@@ -139,4 +139,27 @@ const cartFragment = `
   }
 `;
 
-export { imageFragment, priceFragment, productFragment, seoFragment, cartFragment };
+const collectionFragment = `
+  fragment collection on Collection {
+    id
+    handle
+    title
+    description
+    image {
+      url
+      altText
+      width
+      height
+    }
+    products(first: 50) {
+      edges {
+        node {
+          ...product
+        }
+      }
+    }
+  }
+  ${productFragment}
+`;
+
+export { imageFragment, priceFragment, productFragment, seoFragment, cartFragment, collectionFragment };

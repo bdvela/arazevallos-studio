@@ -139,9 +139,9 @@ export function ProductPageClient({ product }: ProductPageClientProps) {
                                 📸 Talla Personalizada
                             </h3>
                             <p className="text-[#6B6B6B] text-sm mb-6">
-                                Para calcular tu talla exacta, sube una foto de tu mano con una moneda de referencia.
+                                Sube fotos de tus manos con una moneda de referencia para calcular tu talla perfecta.
                             </p>
-                            <SizingSection variantId={variantId} />
+                            <SizingSection variantId={variantId} productHandle={product.handle} />
                         </motion.div>
 
                         {/* Info */}

@@ -127,3 +127,49 @@ export async function getCart(cartId: string): Promise<any | undefined> {
 
     return res.cart;
 }
+
+import { getCollectionsQuery, getCollectionQuery, getProductsWithCollectionsQuery } from './queries';
+
+export async function getCollections(): Promise<any[]> {
+    const res = await shopifyFetch<any>({
+        query: getCollectionsQuery,
+        tags: ['collections']
+    });
+
+    return res.collections.edges.map((edge: any) => edge.node);
+}
+
+export async function getCollection(handle: string): Promise<any | undefined> {
+    const res = await shopifyFetch<any>({
+        query: getCollectionQuery,
+        tags: ['collections'],
+        variables: { handle }
+    });
+
+    return res.collection;
+}
+
+export async function getProductsWithCollections({
+    query,
+    reverse,
+    sortKey
+}: {
+    query?: string;
+    reverse?: boolean;
+    sortKey?: string;
+}): Promise<any[]> {
+    const res = await shopifyFetch<any>({
+        query: getProductsWithCollectionsQuery,
+        tags: ['products'],
+        variables: {
+            query,
+            reverse,
+            sortKey
+        }
+    });
+
+    return res.products.edges.map((edge: any) => ({
+        ...edge.node,
+        collections: edge.node.collections.edges.map((c: any) => c.node)
+    }));
+}
