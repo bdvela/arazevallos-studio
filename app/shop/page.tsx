@@ -3,17 +3,10 @@ import { ProductCard } from '@/components/shop/product-card';
 import Link from 'next/link';
 import { ArrowLeft, Sparkles, Crown, Heart, Palette } from 'lucide-react';
 import { ShopFilters } from '@/components/shop/shop-filters';
+import { collectionConfig } from '@/lib/collections-config';
 
 // Force dynamic rendering to get fresh searchParams
 export const dynamic = 'force-dynamic';
-
-// Collection config with icons and colors
-const collectionConfig: Record<string, { icon: string; color: string; gradient: string }> = {
-    'coleccion-trendy-disenos-en-tendencia': { icon: '🔥', color: '#FF6B6B', gradient: 'from-[#FF6B6B] to-[#FF8E8E]' },
-    'coleccion-luxury-elegancia-premium': { icon: '👑', color: '#9B59B6', gradient: 'from-[#9B59B6] to-[#B07CC6]' },
-    'coleccion-essential': { icon: '💖', color: '#E91E8C', gradient: 'from-[#E91E8C] to-[#F06BA8]' },
-    'press-on-personalizados-disenados-para-ti': { icon: '✨', color: '#7EC8E3', gradient: 'from-[#7EC8E3] to-[#A8D8EA]' },
-};
 
 export default async function ShopPage({
     searchParams

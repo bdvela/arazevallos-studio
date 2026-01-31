@@ -4,63 +4,28 @@ import Link from 'next/link';
 import { ArrowLeft, Sparkles } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
+import { collectionConfig, getCollectionConfig } from '@/lib/collections-config';
 
-// Collection config with icons and colors
-const collectionConfig: Record<string, { icon: string; color: string; gradient: string; description: string }> = {
-    'coleccion-trendy-disenos-en-tendencia': {
-        icon: '🔥',
-        color: '#FF6B6B',
-        gradient: 'from-[#FF6B6B] to-[#FF8E8E]',
-        description: 'Los diseños más populares y a la moda del momento'
-    },
-    'coleccion-luxury-elegancia-premium': {
-        icon: '👑',
-        color: '#9B59B6',
-        gradient: 'from-[#9B59B6] to-[#B07CC6]',
-        description: 'Diseños sofisticados para ocasiones especiales'
-    },
-    'coleccion-essential': {
-        icon: '💖',
-        color: '#E91E8C',
-        gradient: 'from-[#E91E8C] to-[#F06BA8]',
-        description: 'Tonos clásicos perfectos para el día a día'
-    },
-    'press-on-personalizados-disenados-para-ti': {
-        icon: '✨',
-        color: '#7EC8E3',
-        gradient: 'from-[#7EC8E3] to-[#A8D8EA]',
-        description: 'Crea tu diseño único con nuestro kit personalizado'
-    },
-};
-
-export async function generateStaticParams() {
-    const collections = await getCollections();
-    return collections.map((collection: any) => ({
-        handle: collection.handle,
-    }));
-}
+// Force dynamic rendering - collections are fetched on demand
+export const dynamic = 'force-dynamic';
 
 export default async function CollectionPage({
     params
 }: {
-    params: { handle: string }
+    params: Promise<{ handle: string }>
 }) {
-    const collection = await getCollection(params.handle);
+    const { handle } = await params;
+    const collection = await getCollection(handle);
 
     if (!collection) {
         notFound();
     }
 
-    const config = collectionConfig[params.handle] || {
-        icon: '💅',
-        color: '#D4847C',
-        gradient: 'from-[#D4847C] to-[#E8A0B0]',
-        description: 'Descubre nuestra colección exclusiva'
-    };
+    const config = getCollectionConfig(handle);
 
     const products = collection.products.edges.map((edge: any) => ({
         ...edge.node,
-        collections: [{ handle: params.handle, title: collection.title }]
+        collections: [{ handle: handle, title: collection.title }]
     }));
 
     return (
