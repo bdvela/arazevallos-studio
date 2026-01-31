@@ -100,8 +100,8 @@ export default function PressOnPage() {
                                 className="text-4xl md:text-5xl lg:text-6xl font-bold text-[#3D3D3D] leading-tight"
                                 style={{ fontFamily: 'var(--font-playfair), serif' }}
                             >
-                                Press-On Nails para mujeres que{" "}
-                                <span className="text-[#D4847C] italic">valoran su tiempo</span>
+                                Press-On Nails: Look de salón {" "}
+                                <span className="text-[#D4847C] italic">sin salir de casa</span>
                             </motion.h1>
 
                             <motion.p
@@ -111,7 +111,7 @@ export default function PressOnPage() {
                                 className="text-xl text-[#6B6B6B] leading-relaxed"
                             >
                                 ¿Tu agenda no te permite ir al salón? Nuestras uñas press-on te dan el look profesional
-                                que mereces, lista en minutos, sin salir de casa.
+                                que mereces, listas en minutos, sin salir de casa.
                             </motion.p>
 
                             <motion.div
@@ -151,7 +151,7 @@ export default function PressOnPage() {
                                 />
                                 <div className="relative h-full w-full rounded-3xl overflow-hidden bg-white shadow-2xl">
                                     <Image
-                                        src="/images/ara/ara-products.jpg"
+                                        src="/images/ara/press-on.png"
                                         alt="Press-On Nails de Ara Zevallos"
                                         fill
                                         className="object-cover"
@@ -164,39 +164,78 @@ export default function PressOnPage() {
                 </div>
             </section>
 
-            {/* Problem/Solution */}
+            {/* Problem/Solution - Chat Bubble Style */}
             <section className="py-24 bg-white">
-                <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-                    <FadeInUp>
-                        <h2 className="text-3xl md:text-4xl font-bold text-[#3D3D3D] mb-8" style={{ fontFamily: 'var(--font-playfair), serif' }}>
+                <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+                    <FadeInUp className="text-center mb-12">
+                        <h2 className="text-3xl md:text-4xl font-bold text-[#3D3D3D]" style={{ fontFamily: 'var(--font-playfair), serif' }}>
                             ¿Te suena familiar?
                         </h2>
                     </FadeInUp>
-                    <StaggerContainer className="grid md:grid-cols-2 gap-8 text-left mb-12">
+
+                    {/* Chat Bubbles Container */}
+                    <div className="space-y-6">
                         {[
-                            "Quiero uñas bonitas pero no tengo 2-3 horas para ir al salón...",
-                            "Cuando finalmente tengo tiempo, no hay citas disponibles...",
-                            "Me preocupa dañar mis uñas naturales...",
-                            "No vivo en una ciudad grande con buenos salones..."
-                        ].map((text, index) => (
-                            <StaggerItem key={index}>
+                            { text: "Quiero uñas bonitas pero no tengo 2-3 horas para ir al salón...", align: "left", emoji: "😩" },
+                            { text: "Cuando finalmente tengo tiempo, no hay citas disponibles...", align: "right", emoji: "😔" },
+                            { text: "Me preocupa dañar mis uñas naturales...", align: "left", emoji: "😟" },
+                            { text: "No vivo en una ciudad grande con buenos salones...", align: "right", emoji: "🥺" }
+                        ].map((item, index) => (
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, x: item.align === 'left' ? -30 : 30 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                transition={{ delay: index * 0.15, duration: 0.4 }}
+                                viewport={{ once: true }}
+                                className={`flex items-end gap-3 ${item.align === 'right' ? 'flex-row-reverse' : ''}`}
+                            >
+                                {/* Avatar */}
+                                <motion.div
+                                    whileHover={{ scale: 1.1 }}
+                                    className="w-10 h-10 rounded-full bg-gradient-to-br from-[#F5B5C8] to-[#FDE8EE] flex items-center justify-center text-lg flex-shrink-0 shadow-sm"
+                                >
+                                    {item.emoji}
+                                </motion.div>
+
+                                {/* Chat Bubble */}
                                 <motion.div
                                     whileHover={{ scale: 1.02 }}
-                                    className="p-6 bg-red-50 rounded-2xl border border-red-100"
+                                    className={`relative max-w-[80%] p-4 rounded-2xl shadow-sm ${item.align === 'left'
+                                        ? 'bg-gray-100 rounded-bl-md'
+                                        : 'bg-[#FDE8EE] rounded-br-md'
+                                        }`}
                                 >
-                                    <p className="text-[#6B6B6B] italic">"{text}"</p>
+                                    <p className="text-[#6B6B6B] italic text-sm md:text-base">"{item.text}"</p>
+
+                                    {/* Bubble tail */}
+                                    <div className={`absolute bottom-0 w-3 h-3 ${item.align === 'left'
+                                        ? '-left-1 bg-gray-100'
+                                        : '-right-1 bg-[#FDE8EE]'
+                                        }`} style={{
+                                            clipPath: item.align === 'left'
+                                                ? 'polygon(100% 0, 100% 100%, 0 100%)'
+                                                : 'polygon(0 0, 100% 100%, 0 100%)'
+                                        }} />
                                 </motion.div>
-                            </StaggerItem>
+                            </motion.div>
                         ))}
-                    </StaggerContainer>
-                    <FadeInUp delay={0.3}>
+                    </div>
+
+                    {/* Solution Response */}
+                    <FadeInUp delay={0.5} className="mt-12">
                         <motion.div
                             whileHover={{ scale: 1.01 }}
-                            className="p-8 bg-gradient-to-br from-[#FDE8EE] to-white rounded-3xl border border-[#F5B5C8]"
+                            className="relative p-6 md:p-8 bg-gradient-to-br from-[#D4847C] to-[#E8A0B0] rounded-3xl shadow-lg"
                         >
-                            <p className="text-xl text-[#3D3D3D] font-medium">
-                                Las <span className="text-[#D4847C] font-bold">Press-On Nails</span> de Ara Zevallos Studio
-                                son la solución perfecta. Calidad de salón, en tus manos, cuando tú quieras.
+                            <div className="flex items-center gap-3 mb-4">
+                                <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
+                                    <span className="text-2xl">✨</span>
+                                </div>
+                                <span className="text-white font-semibold">Ara Zevallos Studio</span>
+                            </div>
+                            <p className="text-lg md:text-xl text-white font-medium leading-relaxed">
+                                Las <span className="font-bold">Press-On Nails</span> son la solución perfecta.
+                                Calidad de salón, en tus manos, cuando tú quieras. 💅
                             </p>
                         </motion.div>
                     </FadeInUp>
@@ -289,46 +328,66 @@ export default function PressOnPage() {
 
             {/* What's Included */}
             <section className="py-24 bg-gradient-to-br from-[#FDE8EE] via-white to-[#E8F4F8]">
-                <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+                <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
                     <FadeInUp className="text-center mb-12">
                         <h2 className="text-3xl md:text-4xl font-bold text-[#3D3D3D]" style={{ fontFamily: 'var(--font-playfair), serif' }}>
                             ¿Qué incluye tu kit?
                         </h2>
                     </FadeInUp>
 
-                    <ScaleIn>
-                        <div className="bg-white rounded-3xl p-8 md:p-12 shadow-xl border border-[#F5B5C8]/30">
-                            <div className="grid md:grid-cols-2 gap-6">
-                                {[
-                                    "Set de 10 uñas en tu talla personalizada",
-                                    "Pegamento profesional de alta duración",
-                                    "Lima para preparación",
-                                    "Palito de naranjo",
-                                    "Instrucciones de aplicación y cuidado",
-                                    "Tips para mayor duración",
-                                    "Estuche de almacenamiento",
-                                    "Soporte post-venta por WhatsApp",
-                                ].map((item, index) => (
-                                    <motion.div
-                                        key={item}
-                                        initial={{ opacity: 0, x: -20 }}
-                                        whileInView={{ opacity: 1, x: 0 }}
-                                        viewport={{ once: true }}
-                                        transition={{ delay: index * 0.05 }}
-                                        className="flex items-center gap-3"
-                                    >
+                    <div className="grid lg:grid-cols-2 gap-8 items-center">
+                        {/* Kit Image */}
+                        <SlideInLeft>
+                            <motion.div
+                                whileHover={{ scale: 1.02 }}
+                                className="relative aspect-square rounded-3xl overflow-hidden shadow-2xl"
+                            >
+                                <Image
+                                    src="/images/ara/kit-press-on.png"
+                                    alt="Kit completo de Press-On Nails"
+                                    fill
+                                    className="object-cover"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                            </motion.div>
+                        </SlideInLeft>
+
+                        {/* List */}
+                        <SlideInRight>
+                            <div className="bg-white rounded-3xl p-8 md:p-10 shadow-xl border border-[#F5B5C8]/30">
+                                <h3 className="text-xl font-bold text-[#3D3D3D] mb-6">Todo lo que necesitas:</h3>
+                                <div className="space-y-4">
+                                    {[
+                                        "Set de 10 uñas en tu talla personalizada",
+                                        "Pegamento profesional de alta duración",
+                                        "Lima para preparación",
+                                        "Palito de naranjo",
+                                        "Instrucciones de aplicación y cuidado",
+                                        "Tips para mayor duración",
+                                        "Estuche de almacenamiento",
+                                        "Soporte post-venta por WhatsApp",
+                                    ].map((item, index) => (
                                         <motion.div
-                                            whileHover={{ scale: 1.2 }}
-                                            className="w-6 h-6 rounded-full bg-[#D4847C] flex items-center justify-center flex-shrink-0"
+                                            key={item}
+                                            initial={{ opacity: 0, x: -20 }}
+                                            whileInView={{ opacity: 1, x: 0 }}
+                                            viewport={{ once: true }}
+                                            transition={{ delay: index * 0.05 }}
+                                            className="flex items-center gap-3"
                                         >
-                                            <Check className="w-4 h-4 text-white" />
+                                            <motion.div
+                                                whileHover={{ scale: 1.2 }}
+                                                className="w-6 h-6 rounded-full bg-[#D4847C] flex items-center justify-center flex-shrink-0"
+                                            >
+                                                <Check className="w-4 h-4 text-white" />
+                                            </motion.div>
+                                            <span className="text-[#3D3D3D]">{item}</span>
                                         </motion.div>
-                                        <span className="text-[#3D3D3D]">{item}</span>
-                                    </motion.div>
-                                ))}
+                                    ))}
+                                </div>
                             </div>
-                        </div>
-                    </ScaleIn>
+                        </SlideInRight>
+                    </div>
                 </div>
             </section>
 

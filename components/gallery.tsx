@@ -2,9 +2,9 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
-import { X, ChevronLeft, ChevronRight, Sparkles, Heart, Star, Palette, Eye, Footprints } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Sparkles, Heart, Star, Palette, Eye, Footprints, Hand, Brush, Zap } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FadeInUp, StaggerContainer, StaggerItem } from '@/components/ui/motion';
+import { FadeInUp } from '@/components/ui/motion';
 
 interface GalleryItem {
     id: string;
@@ -12,67 +12,89 @@ interface GalleryItem {
     alt: string;
     category: string;
     span?: 'tall' | 'wide' | 'normal';
+    featured?: boolean;
 }
 
-const galleryItems: GalleryItem[] = [
-    {
-        id: '1',
-        src: '/images/ara/ara-products.jpg',
-        alt: 'Diseño de uñas elegante',
-        category: 'Uñas',
-        span: 'tall',
-    },
-    {
-        id: '2',
-        src: '/images/ara/tools.jpg',
-        alt: 'Herramientas profesionales',
-        category: 'Estudio',
-        span: 'normal',
-    },
-    {
-        id: '3',
-        src: '/images/ara/ara-studio.jpg',
-        alt: 'Ara trabajando en el estudio',
-        category: 'Estudio',
-        span: 'wide',
-    },
-    {
-        id: '4',
-        src: '/images/ara/local_photo_1.jpg',
-        alt: 'Interior del estudio',
-        category: 'Estudio',
-        span: 'normal',
-    },
-    {
-        id: '5',
-        src: '/images/ara/local_photo_2.jpg',
-        alt: 'Espacio de trabajo',
-        category: 'Estudio',
-        span: 'tall',
-    },
-    {
-        id: '6',
-        src: '/images/ara/ara-about.jpg',
-        alt: 'Ara Zevallos',
-        category: 'Sobre Ara',
-        span: 'normal',
-    },
+interface CategoryConfig {
+    name: string;
+    icon: React.ComponentType<{ className?: string }>;
+    featured?: boolean;
+}
+
+// ============================================
+// GALLERY DATA FOR HOME (Services)
+// ============================================
+const homeGalleryItems: GalleryItem[] = [
+    // Sistema de Uñas
+    { id: 'h1', src: '/images/ara/ara-products.jpg', alt: 'Sistema de uñas', category: 'Sistema de Uñas', span: 'tall' },
+    // Pedicura
+    { id: 'h2', src: '/images/ara/tools.jpg', alt: 'Pedicura profesional', category: 'Pedicura', span: 'normal' },
+    // Maquillaje
+    { id: 'h3', src: '/images/ara/ara-studio.jpg', alt: 'Maquillaje profesional', category: 'Maquillaje', span: 'wide' },
+    // Press-On (featured)
+    { id: 'h6', src: '/images/ara/press-on.png', alt: 'Press-On Nails', category: 'Press-On', span: 'tall', featured: true },
+    { id: 'h7', src: '/images/ara/kit-press-on.png', alt: 'Kit Press-On completo', category: 'Press-On', span: 'wide', featured: true },
 ];
 
-const categories = [
+const homeCategories: CategoryConfig[] = [
     { name: 'Todos', icon: Sparkles },
-    { name: 'Uñas', icon: Palette },
-    { name: 'Estudio', icon: Star },
-    { name: 'Sobre Ara', icon: Heart },
+    { name: 'Sistema de Uñas', icon: Hand },
+    { name: 'Pedicura', icon: Footprints },
+    { name: 'Maquillaje', icon: Brush },
+    { name: 'Pestañas', icon: Eye },
+    { name: 'Cejas', icon: Eye },
+    { name: 'Press-On', icon: Zap, featured: true },
 ];
 
-export function GallerySection() {
+// ============================================
+// GALLERY DATA FOR ABOUT (Ara & Studio)
+// ============================================
+const aboutGalleryItems: GalleryItem[] = [
+    // Sobre Ara
+    { id: 'a1', src: '/images/ara/ara-about.jpg', alt: 'Ara Zevallos', category: 'Sobre Ara', span: 'tall' },
+    { id: 'a2', src: '/images/ara/ara-studio.jpg', alt: 'Ara trabajando', category: 'Sobre Ara', span: 'wide' },
+    { id: 'a3', src: '/images/ara/ara-products.jpg', alt: 'Ara con sus productos', category: 'Sobre Ara', span: 'normal' },
+    { id: 'a4', src: '/images/ara/ara-1.jpeg', alt: 'Ara con sus productos', category: 'Sobre Ara', span: 'tall' },
+    { id: 'a5', src: '/images/ara/ara-2.jpeg', alt: 'Ara con sus productos', category: 'Sobre Ara', span: 'tall' },
+    // Studio
+    { id: 'a6', src: '/images/ara/local_photo_1.png', alt: 'Interior del studio', category: 'Studio', span: 'tall' },
+    { id: 'a7', src: '/images/ara/local_photo_2.png', alt: 'Espacio de trabajo', category: 'Studio', span: 'normal' },
+    { id: 'a8', src: '/images/ara/tools.jpg', alt: 'Herramientas profesionales', category: 'Studio', span: 'wide' },
+    { id: 'a9', src: '/images/ara/ara-productos.jpeg', alt: 'Herramientas profesionales', category: 'Studio', span: 'wide' },
+
+];
+
+const aboutCategories: CategoryConfig[] = [
+    { name: 'Todos', icon: Sparkles },
+    { name: 'Sobre Ara', icon: Heart },
+    { name: 'Studio', icon: Star },
+];
+
+// ============================================
+// GALLERY COMPONENT
+// ============================================
+interface GallerySectionProps {
+    variant?: 'home' | 'about';
+    title?: string;
+    subtitle?: string;
+    description?: string;
+}
+
+export function GallerySection({
+    variant = 'home',
+    title = 'Galería de',
+    subtitle = 'Trabajos',
+    description = 'Cada diseño es una obra de arte única, creada con amor y dedicación',
+}: GallerySectionProps) {
+    const items = variant === 'home' ? homeGalleryItems : aboutGalleryItems;
+    const categories = variant === 'home' ? homeCategories : aboutCategories;
+
     const [selectedCategory, setSelectedCategory] = useState('Todos');
     const [selectedImage, setSelectedImage] = useState<GalleryItem | null>(null);
 
     const filteredItems = selectedCategory === 'Todos'
-        ? galleryItems
-        : galleryItems.filter(item => item.category === selectedCategory);
+        ? items
+        : items.filter(item => item.category === selectedCategory);
 
     const currentIndex = selectedImage ? filteredItems.findIndex(item => item.id === selectedImage.id) : -1;
 
@@ -93,14 +115,14 @@ export function GallerySection() {
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <FadeInUp className="text-center mb-12">
                     <span className="text-[#D4847C] text-sm font-medium uppercase tracking-wider">
-                        Nuestro Trabajo
+                        {variant === 'home' ? 'Nuestro Trabajo' : 'Conócenos'}
                     </span>
                     <h2 className="mt-3 text-3xl md:text-4xl font-bold text-[#3D3D3D]" style={{ fontFamily: 'var(--font-playfair), serif' }}>
-                        Galería de{' '}
-                        <span className="text-[#D4847C] italic">Trabajos</span>
+                        {title}{' '}
+                        <span className="text-[#D4847C] italic">{subtitle}</span>
                     </h2>
                     <p className="mt-4 text-[#6B6B6B] max-w-2xl mx-auto">
-                        Cada diseño es una obra de arte única, creada con amor y dedicación
+                        {description}
                     </p>
                 </FadeInUp>
 
@@ -112,13 +134,19 @@ export function GallerySection() {
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                             onClick={() => setSelectedCategory(category.name)}
-                            className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all ${selectedCategory === category.name
+                            className={`relative flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all ${selectedCategory === category.name
                                 ? 'bg-gradient-to-r from-[#D4847C] to-[#E8A0B0] text-white shadow-lg'
                                 : 'bg-[#FDE8EE] text-[#6B6B6B] hover:bg-[#F5B5C8]/30'
                                 }`}
                         >
                             <category.icon className="w-4 h-4" />
                             {category.name}
+                            {/* Featured Badge */}
+                            {category.featured && (
+                                <span className="absolute -top-2 -right-2 px-2 py-0.5 bg-[#D4847C] text-white text-[10px] font-bold rounded-full animate-pulse">
+                                    ✨ NEW
+                                </span>
+                            )}
                         </motion.button>
                     ))}
                 </FadeInUp>
@@ -136,10 +164,10 @@ export function GallerySection() {
                                 transition={{ duration: 0.3, delay: index * 0.05 }}
                                 whileHover={{ y: -5 }}
                                 className={`relative cursor-pointer group overflow-hidden rounded-2xl ${item.span === 'tall'
-                                        ? 'row-span-2 aspect-[3/4]'
-                                        : item.span === 'wide'
-                                            ? 'col-span-2 aspect-[16/9]'
-                                            : 'aspect-square'
+                                    ? 'row-span-2 aspect-[3/4]'
+                                    : item.span === 'wide'
+                                        ? 'col-span-2 aspect-[16/9]'
+                                        : 'aspect-square'
                                     }`}
                                 onClick={() => setSelectedImage(item)}
                             >
@@ -149,6 +177,14 @@ export function GallerySection() {
                                     fill
                                     className="object-cover transition-transform duration-500 group-hover:scale-110"
                                 />
+                                {/* Featured Badge on Image */}
+                                {item.featured && (
+                                    <div className="absolute top-3 left-3 z-10">
+                                        <span className="px-3 py-1 bg-gradient-to-r from-[#D4847C] to-[#E8A0B0] text-white text-xs font-bold rounded-full shadow-lg">
+                                            ⭐ Destacado
+                                        </span>
+                                    </div>
+                                )}
                                 {/* Overlay */}
                                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                                     <div className="absolute bottom-4 left-4 right-4">

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowRight, Instagram, MessageCircle, MapPin, Heart, Sparkles, Star } from "lucide-react";
 import { motion } from "framer-motion";
 import { FadeInUp, SlideInLeft, SlideInRight, StaggerContainer, StaggerItem } from "@/components/ui/motion";
+import { GallerySection } from "@/components/gallery";
 
 const values = [
     {
@@ -96,7 +97,7 @@ export default function AboutPage() {
                                 transition={{ delay: 0.5 }}
                                 className="text-[#6B6B6B] leading-relaxed"
                             >
-                                Desde Huánuco, Perú, he construido este estudio con la misión de realzar la belleza
+                                Desde Huánuco, Perú, he construido este studio con la misión de realzar la belleza
                                 de cada mujer con estilo y elegancia. Mi pasión por el arte del nail design,
                                 el maquillaje y el cuidado de la belleza me impulsa a ofrecer siempre lo mejor.
                             </motion.p>
@@ -176,7 +177,7 @@ export default function AboutPage() {
                     <div className="grid lg:grid-cols-2 gap-16 items-center">
                         <SlideInLeft className="space-y-6">
                             <span className="text-[#D4847C] text-sm font-medium uppercase tracking-wider">
-                                El Estudio
+                                El Studio
                             </span>
                             <h2 className="text-3xl md:text-4xl font-bold text-[#3D3D3D]" style={{ fontFamily: 'var(--font-playfair), serif' }}>
                                 Un espacio pensado{" "}
@@ -187,7 +188,7 @@ export default function AboutPage() {
                                 puedes relajarte mientras te consiento con servicios de calidad premium.
                             </p>
                             <p className="text-[#6B6B6B] leading-relaxed">
-                                Ubicado en Huánuco, Perú, el estudio está equipado con los mejores productos
+                                Ubicado en Huánuco, Perú, el studio está equipado con los mejores productos
                                 y herramientas profesionales para garantizar resultados excepcionales.
                             </p>
 
@@ -204,7 +205,7 @@ export default function AboutPage() {
                                 className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-xl"
                             >
                                 <Image
-                                    src="/images/ara/local_photo_2.jpg"
+                                    src="/images/ara/local_photo_2.png"
                                     alt="Ara Zevallos Studio"
                                     fill
                                     className="object-cover"
@@ -212,6 +213,70 @@ export default function AboutPage() {
                             </motion.div>
                         </SlideInRight>
                     </div>
+                </div>
+            </section>
+
+            {/* Gallery - Ara & Studio */}
+            <GallerySection
+                variant="about"
+                title="Galería del"
+                subtitle="Studio"
+                description="Conoce nuestro espacio y el trabajo que realizamos con amor y dedicación"
+            />
+
+            {/* Location Section */}
+            <section className="py-24 bg-white">
+                <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+                    <FadeInUp className="text-center mb-12">
+                        <span className="text-[#D4847C] text-sm font-medium uppercase tracking-wider">
+                            Ubicación
+                        </span>
+                        <h2 className="mt-3 text-3xl md:text-4xl font-bold text-[#3D3D3D]" style={{ fontFamily: 'var(--font-playfair), serif' }}>
+                            Visítanos en el Studio
+                        </h2>
+                        <p className="mt-4 text-[#6B6B6B] max-w-xl mx-auto">
+                            Un espacio acogedor diseñado para que disfrutes de la experiencia completa.
+                        </p>
+                    </FadeInUp>
+
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="rounded-3xl overflow-hidden shadow-xl border border-[#F5B5C8]/30"
+                    >
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3930.1545372234887!2d-76.2394521!3d-9.9210847!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91a7c3003477179b%3A0xd38a3cbd81c15a86!2sAra%20Zevallos%20Studio!5e0!3m2!1sen!2spe!4v1769885790307!5m2!1sen!2spe"
+                            width="100%"
+                            height="400"
+                            style={{ border: 0 }}
+                            allowFullScreen
+                            loading="lazy"
+                            referrerPolicy="no-referrer-when-downgrade"
+                        />
+                    </motion.div>
+
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.2 }}
+                        className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-4"
+                    >
+                        <div className="flex items-center gap-2 text-[#6B6B6B]">
+                            <MapPin className="w-5 h-5 text-[#D4847C]" />
+                            <span>Huánuco, Perú</span>
+                        </div>
+                        <motion.a
+                            whileHover={{ scale: 1.02 }}
+                            href="https://maps.app.goo.gl/5tX6ttp5mhfp4GfH6"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 text-[#D4847C] hover:text-[#c06b64] transition-colors font-medium"
+                        >
+                            Abrir en Google Maps →
+                        </motion.a>
+                    </motion.div>
                 </div>
             </section>
 

@@ -9,12 +9,12 @@ const footerLinks = {
     navegacion: [
         { href: '/', label: 'Inicio' },
         { href: '/services', label: 'Servicios' },
-        { href: '/press-on', label: 'Press-On' },
+        { href: '/press-on', label: 'Press-On', featured: true },
         { href: '/shop', label: 'Tienda' },
         { href: '/about', label: 'Sobre Ara' },
     ],
     servicios: [
-        { label: 'Uñas Acrílicas' },
+        { label: 'Sistema de Uñas' },
         { label: 'Maquillaje' },
         { label: 'Pestañas' },
         { label: 'Cejas' },
@@ -98,6 +98,11 @@ export function Footer() {
                                     >
                                         <span className="w-0 group-hover:w-2 h-0.5 bg-[#F5B5C8] transition-all duration-300" />
                                         {link.label}
+                                        {link.featured && (
+                                            <span className="px-1.5 py-0.5 bg-gradient-to-r from-[#D4847C] to-[#E8A0B0] text-white text-[8px] font-bold rounded-full">
+                                                NEW
+                                            </span>
+                                        )}
                                     </Link>
                                 </li>
                             ))}

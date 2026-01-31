@@ -13,7 +13,7 @@ interface FAQItem {
 const faqs: FAQItem[] = [
     {
         question: '¿Cómo sé cuál es mi talla de press-on?',
-        answer: 'Es muy fácil! Solo necesitas enviarnos una foto de tu mano junto a una moneda de 1 sol como referencia. Con esa imagen, calculamos el ancho exacto de cada una de tus uñas para crear un set personalizado a tu medida. Te contactaremos por WhatsApp para guiarte en el proceso.',
+        answer: 'Es muy fácil. Solo necesitas enviarnos 4 fotos de tus manos junto a una moneda de 1 sol como referencia: una de la mano izquierda, una de la mano derecha y una de cada pulgar por separado. Con estas imágenes, calculamos el ancho exacto de tus uñas para crear un set personalizado a tu medida. Te contactaremos por WhatsApp para guiarte en el proceso de ser necesario.',
     },
     {
         question: '¿Cuánto tiempo duran las press-on?',
@@ -29,7 +29,7 @@ const faqs: FAQItem[] = [
     },
     {
         question: '¿A qué ciudades hacen envío?',
-        answer: 'Hacemos envíos a todo el Perú. El tiempo de entrega varía según tu ubicación: Lima 1-2 días, provincias 3-5 días. Recibirás un número de tracking para seguir tu pedido.',
+        answer: 'Hacemos envíos a todo el Perú. El tiempo de entrega varía según tu ubicación: Huánuco 1-2 días, Lima y otras provincias 3-5 días. Recibirás un número de tracking para seguir tu pedido.',
     },
     {
         question: '¿Qué incluye el kit de press-on?',
@@ -41,7 +41,7 @@ const faqs: FAQItem[] = [
     },
     {
         question: '¿Puedo pedir un diseño personalizado?',
-        answer: '¡Claro que sí! Contáctanos por WhatsApp con tu idea o inspiración y creamos un diseño único para ti. Los diseños personalizados tienen un costo adicional y tiempo de elaboración de 3-5 días.',
+        answer: '¡Claro que sí! Puedes adjuntar tu diseño de referencia directamente en la página de compra o escribirnos por WhatsApp con tu idea o inspiración. Creamos un diseño único para ti.',
     },
 ];
 

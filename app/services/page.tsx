@@ -123,6 +123,58 @@ export default function ServicesPage() {
                 </div>
             </section>
 
+            {/* Location Section */}
+            <section className="py-20 bg-white">
+                <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+                    <FadeInUp className="text-center mb-12">
+                        <span className="text-[#D4847C] text-sm font-medium uppercase tracking-wider">
+                            Visítanos
+                        </span>
+                        <h2 className="mt-3 text-3xl md:text-4xl font-bold text-[#3D3D3D]" style={{ fontFamily: 'var(--font-playfair), serif' }}>
+                            Nuestro Studio
+                        </h2>
+                        <p className="mt-4 text-[#6B6B6B] max-w-xl mx-auto">
+                            Te esperamos en un espacio diseñado para tu comodidad y relajación.
+                        </p>
+                    </FadeInUp>
+
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="rounded-3xl overflow-hidden shadow-xl border border-[#F5B5C8]/30"
+                    >
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3930.1545372234887!2d-76.2394521!3d-9.9210847!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91a7c3003477179b%3A0xd38a3cbd81c15a86!2sAra%20Zevallos%20Studio!5e0!3m2!1sen!2spe!4v1769885790307!5m2!1sen!2spe"
+                            width="100%"
+                            height="350"
+                            style={{ border: 0 }}
+                            allowFullScreen
+                            loading="lazy"
+                            referrerPolicy="no-referrer-when-downgrade"
+                        />
+                    </motion.div>
+
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.2 }}
+                        className="mt-6 text-center"
+                    >
+                        <motion.a
+                            whileHover={{ scale: 1.02 }}
+                            href="https://maps.app.goo.gl/5tX6ttp5mhfp4GfH6"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 text-[#D4847C] hover:text-[#c06b64] transition-colors font-medium"
+                        >
+                            📍 Abrir en Google Maps →
+                        </motion.a>
+                    </motion.div>
+                </div>
+            </section>
+
             {/* CTA */}
             <section className="py-20 bg-gradient-to-r from-[#D4847C] to-[#E8A0B0]">
                 <FadeInUp className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">

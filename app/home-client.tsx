@@ -286,7 +286,7 @@ export function HomeClient({ products }: HomeClientProps) {
                                     <ScaleIn delay={0.4} className="aspect-square rounded-2xl overflow-hidden bg-[#F5B5C8]/20">
                                         <Image
                                             src="/images/ara/tools.jpg"
-                                            alt="Ara en su estudio"
+                                            alt="Ara en su studio"
                                             width={300}
                                             height={300}
                                             className="w-full h-full object-cover"

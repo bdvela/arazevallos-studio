@@ -9,7 +9,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 const navLinks = [
     { href: '/', label: 'Inicio' },
     { href: '/services', label: 'Servicios' },
-    { href: '/press-on', label: 'Press-On' },
+    { href: '/press-on', label: 'Press-On', featured: true },
     { href: '/shop', label: 'Tienda' },
     { href: '/about', label: 'Sobre Ara' },
 ];
@@ -71,6 +71,11 @@ export function Navbar() {
                                     className="relative text-sm font-medium text-[#3D3D3D] hover:text-[#D4847C] transition-colors group"
                                 >
                                     {link.label}
+                                    {link.featured && (
+                                        <span className="absolute -top-2 -right-8 px-1.5 py-0.5 bg-gradient-to-r from-[#D4847C] to-[#E8A0B0] text-white text-[9px] font-bold rounded-full animate-pulse">
+                                            NEW
+                                        </span>
+                                    )}
                                     <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-[#D4847C] transition-all duration-300 group-hover:w-full" />
                                 </Link>
                             </motion.div>
@@ -186,9 +191,14 @@ export function Navbar() {
                                             setIsMenuOpen(false);
                                             window.scrollTo({ top: 0, behavior: 'smooth' });
                                         }}
-                                        className="block py-3 text-lg font-medium text-[#3D3D3D] hover:text-[#D4847C] hover:pl-2 transition-all"
+                                        className="relative inline-flex items-center gap-2 py-3 text-lg font-medium text-[#3D3D3D] hover:text-[#D4847C] hover:pl-2 transition-all"
                                     >
                                         {link.label}
+                                        {link.featured && (
+                                            <span className="px-2 py-0.5 bg-gradient-to-r from-[#D4847C] to-[#E8A0B0] text-white text-[10px] font-bold rounded-full animate-pulse">
+                                                NEW
+                                            </span>
+                                        )}
                                     </Link>
                                 </motion.div>
                             ))}
