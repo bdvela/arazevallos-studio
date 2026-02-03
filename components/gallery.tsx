@@ -26,11 +26,13 @@ interface CategoryConfig {
 // ============================================
 const homeGalleryItems: GalleryItem[] = [
     // Sistema de Uñas
-    { id: 'h1', src: '/images/ara/ara-products.jpg', alt: 'Sistema de uñas', category: 'Sistema de Uñas', span: 'tall' },
+    { id: 'h3', src: '/images/nails/rubber/3.jpeg', alt: 'Sistema de uñas', category: 'Sistema de Uñas', span: 'normal' },
+    { id: 'h2', src: '/images/nails/rubber/2.jpeg', alt: 'Sistema de uñas', category: 'Sistema de Uñas', span: 'normal' },
+    { id: 'h1', src: '/images/nails/rubber/1.jpeg', alt: 'Sistema de uñas', category: 'Sistema de Uñas', span: 'wide' },
     // Pedicura
-    { id: 'h2', src: '/images/ara/tools.jpg', alt: 'Pedicura profesional', category: 'Pedicura', span: 'normal' },
+    { id: 'h4', src: '/images/ara/tools.jpg', alt: 'Pedicura profesional', category: 'Pedicura', span: 'normal' },
     // Maquillaje
-    { id: 'h3', src: '/images/ara/ara-studio.jpg', alt: 'Maquillaje profesional', category: 'Maquillaje', span: 'wide' },
+    { id: 'h5', src: '/images/ara/ara-studio.jpg', alt: 'Maquillaje profesional', category: 'Maquillaje', span: 'wide' },
     // Press-On (featured)
     { id: 'h6', src: '/images/ara/press-on.png', alt: 'Press-On Nails', category: 'Press-On', span: 'tall', featured: true },
     { id: 'h7', src: '/images/ara/kit-press-on.png', alt: 'Kit Press-On completo', category: 'Press-On', span: 'wide', featured: true },
