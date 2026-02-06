@@ -5,6 +5,8 @@ import Image from 'next/image';
 import { ShoppingBag, Menu, X, Instagram, MessageCircle, Fullscreen } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { getCartTotalQuantity } from '@/lib/shopify/actions';
+import { CartNotification } from '@/components/ui/cart-notification';
 
 const navLinks = [
     { href: '/', label: 'Inicio' },
@@ -17,6 +19,18 @@ const navLinks = [
 export function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
+    const [cartCount, setCartCount] = useState(0);
+
+    const updateCartCount = async () => {
+        const count = await getCartTotalQuantity();
+        setCartCount(count);
+    };
+
+    useEffect(() => {
+        updateCartCount();
+        window.addEventListener('cart-updated', updateCartCount);
+        return () => window.removeEventListener('cart-updated', updateCartCount);
+    }, []);
 
     // Detect scroll for navbar background change
     useEffect(() => {
@@ -37,6 +51,7 @@ export function Navbar() {
                 : 'bg-white/95 backdrop-blur-md border-b border-[#F5B5C8]/30'
                 }`}
         >
+            <CartNotification />
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="flex h-20 items-center justify-between">
                     {/* Logo */}
@@ -114,9 +129,16 @@ export function Navbar() {
                         <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
                             <Link
                                 href="/cart"
-                                className="relative p-2 text-[#6B6B6B] hover:text-[#D4847C] transition-colors"
+                                className="p-2 text-[#6B6B6B] hover:text-[#D4847C] transition-colors"
                             >
-                                <ShoppingBag className="w-5 h-5" />
+                                <div className="relative">
+                                    <ShoppingBag className="w-5 h-5" />
+                                    {cartCount > 0 && (
+                                        <span className="absolute -top-1.5 -right-1.5 bg-[#D4847C] text-white text-[9px] font-bold w-4 h-4 flex items-center justify-center rounded-full shadow-sm">
+                                            {cartCount}
+                                        </span>
+                                    )}
+                                </div>
                             </Link>
                         </motion.div>
 

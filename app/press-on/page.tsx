@@ -121,8 +121,8 @@ export default function PressOnPage() {
                                 className="flex flex-col sm:flex-row gap-4"
                             >
                                 <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
-                                    <Link href="/shop" className="btn-primary inline-flex items-center justify-center gap-2 text-lg px-8 py-4">
-                                        Ver Diseños
+                                    <Link href="/shop/kit-press-on-personalizado" className="btn-primary inline-flex items-center justify-center gap-2 text-lg px-8 py-4">
+                                        Comprar Kit
                                         <ArrowRight className="w-5 h-5" />
                                     </Link>
                                 </motion.div>
@@ -239,6 +239,169 @@ export default function PressOnPage() {
                             </p>
                         </motion.div>
                     </FadeInUp>
+                </div>
+            </section>
+
+            {/* AI Feature Section - Cohesive Light Theme */}
+            <section className="py-24 bg-gradient-to-br from-[#E8F4F8] via-white to-[#FDE8EE] relative overflow-hidden">
+                {/* Subtle Background Orbs */}
+                <motion.div
+                    animate={{ scale: [1, 1.1, 1], opacity: [0.2, 0.3, 0.2] }}
+                    transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+                    className="absolute top-10 left-10 w-80 h-80 bg-[#7EC8E3]/20 rounded-full blur-3xl"
+                />
+                <motion.div
+                    animate={{ scale: [1, 1.15, 1], opacity: [0.2, 0.35, 0.2] }}
+                    transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
+                    className="absolute bottom-10 right-10 w-96 h-96 bg-[#F5B5C8]/20 rounded-full blur-3xl"
+                />
+
+                <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                    <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                        {/* Text Content */}
+                        <div className="order-2 lg:order-1">
+                            <FadeInUp>
+                                <span className="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-[#7EC8E3]/10 text-[#3D3D3D] text-xs font-bold tracking-widest uppercase mb-6 border border-[#7EC8E3]/20">
+                                    <Sparkles className="w-3 h-3 text-[#7EC8E3]" />
+                                    Tecnología Exclusiva
+                                </span>
+                            </FadeInUp>
+
+                            <FadeInUp delay={0.1}>
+                                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#3D3D3D] mb-6 leading-tight" style={{ fontFamily: 'var(--font-playfair), serif' }}>
+                                    Cotiza tu diseño{" "}
+                                    <span className="text-[#D4847C] italic">al instante</span>
+                                </h2>
+                            </FadeInUp>
+
+                            <FadeInUp delay={0.2}>
+                                <p className="text-lg text-[#6B6B6B] mb-8 leading-relaxed">
+                                    Olvídate de esperar horas por una respuesta al DM. Sube tu foto de inspiración y nuestra IA te cotiza en segundos, analizando la complejidad real del diseño.
+                                </p>
+                            </FadeInUp>
+
+                            <StaggerContainer className="space-y-4 mb-10">
+                                {[
+                                    { icon: "🔍", title: "Escaneo Inteligente", desc: "Detecta acabados, texturas y nivel de detalle." },
+                                    { icon: "💰", title: "Precio Transparente", desc: "Sin sorpresas. Sabes exactamente qué pagas." },
+                                    { icon: "⚡", title: "Disponible 24/7", desc: "Cotiza tu diseño cuando quieras, sin esperar." }
+                                ].map((item, i) => (
+                                    <StaggerItem key={i}>
+                                        <motion.div
+                                            whileHover={{ x: 5 }}
+                                            className="flex items-start gap-4 p-4 bg-white rounded-2xl border border-[#F5B5C8]/20 shadow-sm hover:shadow-md transition-shadow"
+                                        >
+                                            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#FDE8EE] to-white flex items-center justify-center text-lg shrink-0">
+                                                {item.icon}
+                                            </div>
+                                            <div>
+                                                <h4 className="text-[#3D3D3D] font-bold text-sm">{item.title}</h4>
+                                                <p className="text-[#6B6B6B] text-sm">{item.desc}</p>
+                                            </div>
+                                        </motion.div>
+                                    </StaggerItem>
+                                ))}
+                            </StaggerContainer>
+
+                            <FadeInUp delay={0.4}>
+                                <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
+                                    <Link
+                                        href="/shop/kit-press-on-personalizado"
+                                        className="btn-primary inline-flex items-center gap-2 text-lg px-8 py-4"
+                                    >
+                                        <Sparkles className="w-5 h-5" />
+                                        Probar Cotizador IA
+                                        <ArrowRight className="w-5 h-5" />
+                                    </Link>
+                                </motion.div>
+                            </FadeInUp>
+                        </div>
+
+                        {/* Visual Demo Card */}
+                        <div className="order-1 lg:order-2">
+                            <SlideInRight>
+                                <motion.div
+                                    whileHover={{ y: -5 }}
+                                    className="relative bg-white rounded-3xl p-6 md:p-8 shadow-xl border border-[#F5B5C8]/30 overflow-hidden"
+                                >
+                                    {/* Decorative Corner */}
+                                    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[#7EC8E3]/10 to-transparent rounded-bl-full" />
+
+                                    {/* Header */}
+                                    <div className="flex items-center justify-between mb-6">
+                                        <div className="flex items-center gap-3">
+                                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#D4847C] to-[#E8A0B0] flex items-center justify-center">
+                                                <Sparkles className="w-5 h-5 text-white" />
+                                            </div>
+                                            <div>
+                                                <p className="text-xs text-[#6B6B6B] uppercase tracking-wider">Análisis IA</p>
+                                                <p className="text-sm font-bold text-[#3D3D3D]">Cotizador Inteligente</p>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-center gap-1">
+                                            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                                            <span className="text-xs text-green-600 font-medium">Online</span>
+                                        </div>
+                                    </div>
+
+                                    {/* Image Preview with Scan */}
+                                    <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-[#FDE8EE] mb-6">
+                                        <Image
+                                            src="/images/ara/press-on.png"
+                                            alt="Diseño siendo analizado"
+                                            fill
+                                            className="object-cover"
+                                        />
+                                        {/* Scan Line */}
+                                        <motion.div
+                                            animate={{ top: ['0%', '100%', '0%'] }}
+                                            transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                                            className="absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#7EC8E3] to-transparent shadow-[0_0_10px_#7EC8E3]"
+                                        />
+                                        {/* Overlay Badge */}
+                                        <div className="absolute bottom-3 left-3 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full flex items-center gap-2 shadow-lg">
+                                            <motion.div
+                                                animate={{ rotate: 360 }}
+                                                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                                            >
+                                                <Sparkles className="w-4 h-4 text-[#D4847C]" />
+                                            </motion.div>
+                                            <span className="text-xs font-medium text-[#3D3D3D]">Analizando...</span>
+                                        </div>
+                                    </div>
+
+                                    {/* Results */}
+                                    <div className="space-y-4">
+                                        <div className="flex items-center justify-between p-3 bg-[#FDE8EE]/50 rounded-xl">
+                                            <span className="text-sm text-[#6B6B6B]">Nivel detectado</span>
+                                            <span className="text-sm font-bold text-[#D4847C] bg-[#D4847C]/10 px-3 py-1 rounded-full">INTERMEDIO</span>
+                                        </div>
+
+                                        <div className="flex items-center justify-between">
+                                            <div>
+                                                <p className="text-xs text-[#6B6B6B] mb-1">Precio estimado</p>
+                                                <p className="text-3xl font-bold text-[#3D3D3D]">S/ 70<span className="text-lg text-[#6B6B6B] font-normal">.00</span></p>
+                                            </div>
+                                            <div className="text-right">
+                                                <p className="text-xs text-[#6B6B6B] mb-1">Confianza</p>
+                                                <div className="flex items-center gap-2">
+                                                    <div className="h-2 w-20 bg-gray-100 rounded-full overflow-hidden">
+                                                        <motion.div
+                                                            initial={{ width: 0 }}
+                                                            whileInView={{ width: '95%' }}
+                                                            transition={{ duration: 1.5, delay: 0.5 }}
+                                                            className="h-full bg-gradient-to-r from-[#D4847C] to-[#E8A0B0] rounded-full"
+                                                        />
+                                                    </div>
+                                                    <span className="text-sm font-bold text-[#D4847C]">95%</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            </SlideInRight>
+                        </div>
+                    </div>
                 </div>
             </section>
 
@@ -405,10 +568,10 @@ export default function PressOnPage() {
                     </p>
                     <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
                         <Link
-                            href="/shop"
+                            href="/shop/kit-press-on-personalizado"
                             className="inline-flex items-center gap-2 bg-white text-[#D4847C] px-10 py-5 rounded-full font-semibold hover:bg-[#FFFBFC] transition-colors text-lg"
                         >
-                            Ver Diseños Disponibles
+                            Comprar Kit Personalizado
                             <ArrowRight className="w-5 h-5" />
                         </Link>
                     </motion.div>

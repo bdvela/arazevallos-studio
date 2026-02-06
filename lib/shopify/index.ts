@@ -93,7 +93,7 @@ export async function getProduct(handle: string): Promise<any | undefined> {
     return res.product;
 }
 
-import { createCartMutation, addToCartMutation } from './mutations';
+import { createCartMutation, addToCartMutation, removeFromCartMutation } from './mutations';
 
 export async function createCart(): Promise<any> {
     const res = await shopifyFetch<any>({
@@ -113,6 +113,18 @@ export async function addToCart(cartId: string, lines: any[]): Promise<any> {
         cache: 'no-store'
     });
     return res.cartLinesAdd.cart;
+}
+
+export async function removeFromCart(cartId: string, lineIds: string[]): Promise<any> {
+    const res = await shopifyFetch<any>({
+        query: removeFromCartMutation,
+        variables: {
+            cartId,
+            lineIds
+        },
+        cache: 'no-store'
+    });
+    return res.cartLinesRemove.cart;
 }
 
 import { getCartQuery } from './queries';

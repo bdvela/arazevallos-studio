@@ -1,7 +1,8 @@
 'use server';
 
-import { addToCart, createCart } from '@/lib/shopify';
+import { addToCart, createCart, getCart, removeFromCart } from '@/lib/shopify';
 import { cookies } from 'next/headers';
+import { revalidatePath } from 'next/cache';
 
 export async function addItem(variantId: string | undefined, attributes: Record<string, string> | undefined) {
     if (!variantId) {
@@ -35,5 +36,30 @@ export async function addItem(variantId: string | undefined, attributes: Record<
         return { message: 'Success' };
     } catch (e) {
         return { message: 'Error adding to cart' };
+    }
+}
+
+export async function getCartTotalQuantity() {
+    const cartId = (await cookies()).get('cartId')?.value;
+    if (!cartId) return 0;
+
+    try {
+        const cart = await getCart(cartId);
+        return cart?.totalQuantity || 0;
+    } catch (e) {
+        return 0;
+    }
+}
+
+export async function removeItem(lineId: string) {
+    const cartId = (await cookies()).get('cartId')?.value;
+    if (!cartId) return { message: 'Missing cart ID' };
+
+    try {
+        await removeFromCart(cartId, [lineId]);
+        revalidatePath('/cart');
+        return { message: 'Success' };
+    } catch (e) {
+        return { message: 'Error deleting item' };
     }
 }

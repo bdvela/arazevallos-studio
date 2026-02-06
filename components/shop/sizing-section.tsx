@@ -11,9 +11,10 @@ interface SizingSectionProps {
     variantId: string;
     isCustomProduct?: boolean;
     productHandle?: string;
+    isGiftCard?: boolean;
 }
 
-export function SizingSection({ variantId, isCustomProduct = false, productHandle }: SizingSectionProps) {
+export function SizingSection({ variantId, isCustomProduct = false, productHandle, isGiftCard = false }: SizingSectionProps) {
     const [uploadedImages, setUploadedImages] = useState<{ hands: string[], design: string | null } | null>(null);
     const [isAdding, setIsAdding] = useState(false);
     const router = useRouter();
@@ -28,7 +29,9 @@ export function SizingSection({ variantId, isCustomProduct = false, productHandl
     };
 
     const handleAddToCart = async () => {
-        if (!uploadedImages || uploadedImages.hands.length < 4 || !variantId) return;
+        // Validation skipped for Gift Cards
+        if (!isGiftCard && (!uploadedImages || uploadedImages.hands.length < 4 || !variantId)) return;
+        if (!variantId && !isGiftCard) return;
 
         setIsAdding(true);
 
@@ -36,22 +39,30 @@ export function SizingSection({ variantId, isCustomProduct = false, productHandl
             // Create attributes object with all photo URLs
             const attributes: Record<string, string> = {};
 
-            // Add hand photos
-            uploadedImages.hands.forEach((url, index) => {
-                attributes[`Foto Mano ${index + 1}`] = url;
-            });
+            if (!isGiftCard && uploadedImages) {
+                // Add hand photos
+                uploadedImages.hands.forEach((url, index) => {
+                    attributes[`Foto Mano ${index + 1}`] = url;
+                });
 
-            // Add design reference if present
-            if (uploadedImages.design) {
-                attributes["Diseño Referencia"] = uploadedImages.design;
+                // Add design reference if present
+                if (uploadedImages.design) {
+                    attributes["Diseño Referencia"] = uploadedImages.design;
+                }
             }
 
             const result = await addItem(variantId, attributes);
 
             if (result?.message === 'Success') {
+                const event = new CustomEvent('cart-updated', {
+                    detail: {
+                        title: '¡Agregado al carrito!',
+                        message: isGiftCard ? 'Tarjeta de regalo agregada.' : 'Tu kit personalizado está listo.',
+                        type: 'success'
+                    }
+                });
+                window.dispatchEvent(event);
                 router.refresh();
-                // Show success message
-                alert('¡Agregado al carrito! 🎉');
             } else {
                 alert('Error al agregar. Por favor intenta de nuevo.');
             }
@@ -63,36 +74,40 @@ export function SizingSection({ variantId, isCustomProduct = false, productHandl
         }
     };
 
-    const isReady = uploadedImages && uploadedImages.hands.length >= 4 &&
-        uploadedImages.hands.every(url => url !== null);
+    const isReady = isGiftCard || (uploadedImages && uploadedImages.hands.length >= 4 &&
+        uploadedImages.hands.every(url => url !== null));
 
     return (
         <div className="space-y-6">
-            <div className="bg-[#FDE8EE] rounded-xl p-4 text-center">
-                <h3 className="font-semibold text-[#3D3D3D] mb-1">
-                    📸 Paso 1: Sube tus fotos
-                </h3>
-                <p className="text-sm text-[#6B6B6B]">
-                    Necesitamos fotos de tus manos para crear tu talla perfecta
-                </p>
-            </div>
-
-            <SizingUploader
-                onUploadComplete={handleUploadComplete}
-                className="max-w-none"
-                showDesignUpload={showDesignUpload}
-            />
-
-            {isReady && (
-                <div className="bg-green-50 border border-green-200 rounded-xl p-4 flex items-center gap-3">
-                    <div className="bg-green-500 text-white p-1 rounded-full">
-                        <Check className="w-4 h-4" />
+            {!isGiftCard && (
+                <>
+                    <div className="bg-[#FDE8EE] rounded-xl p-4 text-center">
+                        <h3 className="font-semibold text-[#3D3D3D] mb-1">
+                            📸 Paso 1: Sube tus fotos
+                        </h3>
+                        <p className="text-sm text-[#6B6B6B]">
+                            Necesitamos fotos de tus manos para crear tu talla perfecta
+                        </p>
                     </div>
-                    <div>
-                        <p className="font-medium text-green-700">¡Fotos listas!</p>
-                        <p className="text-sm text-green-600">Ya puedes agregar al carrito</p>
-                    </div>
-                </div>
+
+                    <SizingUploader
+                        onUploadComplete={handleUploadComplete}
+                        className="max-w-none"
+                        showDesignUpload={showDesignUpload}
+                    />
+
+                    {isReady && (
+                        <div className="bg-green-50 border border-green-200 rounded-xl p-4 flex items-center gap-3">
+                            <div className="bg-green-500 text-white p-1 rounded-full">
+                                <Check className="w-4 h-4" />
+                            </div>
+                            <div>
+                                <p className="font-medium text-green-700">¡Fotos listas!</p>
+                                <p className="text-sm text-green-600">Ya puedes agregar al carrito</p>
+                            </div>
+                        </div>
+                    )}
+                </>
             )}
 
             <button
@@ -106,11 +121,11 @@ export function SizingSection({ variantId, isCustomProduct = false, productHandl
                         <Loader2 className="w-4 h-4 animate-spin" /> Agregando...
                     </>
                 ) : (
-                    'Agregar al Carrito 🛒'
+                    isGiftCard ? 'Agregar Gift Card 🎁' : 'Agregar al Carrito 🛒'
                 )}
             </button>
 
-            {!isReady && (
+            {!isReady && !isGiftCard && (
                 <p className="text-xs text-[#D4847C] text-center">
                     * Sube las 4 fotos de tus manos para continuar
                 </p>

@@ -2,7 +2,8 @@ import { getCart } from '@/lib/shopify';
 import { cookies } from 'next/headers';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowLeft, ShoppingBag } from 'lucide-react';
+import { ArrowLeft, ShoppingBag, Trash2 } from 'lucide-react';
+import { DeleteItemButton } from '@/components/cart/delete-item-button';
 
 export default async function CartPage() {
     const cartId = (await cookies()).get('cartId')?.value;
@@ -79,33 +80,77 @@ export default async function CartPage() {
                                                     {item.merchandise.title}
                                                 </p>
                                             </div>
-                                            <p className="font-semibold text-[#D4847C]">
-                                                {item.cost.totalAmount.currencyCode === 'PEN' ? 'S/' : item.cost.totalAmount.currencyCode}{' '}
-                                                {parseFloat(item.cost.totalAmount.amount).toFixed(2)}
-                                            </p>
+                                            <div className="text-right">
+                                                <p className="font-semibold text-[#D4847C] mb-2">
+                                                    {item.cost.totalAmount.currencyCode === 'PEN' ? 'S/' : item.cost.totalAmount.currencyCode}{' '}
+                                                    {parseFloat(item.cost.totalAmount.amount).toFixed(2)}
+                                                </p>
+                                                <DeleteItemButton lineId={item.id} />
+                                            </div>
                                         </div>
 
-                                        {/* Custom Attributes (Sizing Photo) */}
-                                        {item.attributes.length > 0 && (
-                                            <div className="mt-4 space-y-2">
-                                                {item.attributes.map((attr: any) => (
-                                                    <div key={attr.key} className="text-sm">
-                                                        {attr.key === 'Sizing Photo' ? (
-                                                            <div className="flex items-center gap-3">
-                                                                <div className="relative h-12 w-12 border border-[#F5B5C8] rounded-lg overflow-hidden">
-                                                                    <Image src={attr.value} alt="Sizing Reference" fill className="object-cover" />
-                                                                </div>
-                                                                <span className="text-[#6B6B6B]">Foto de referencia adjunta ✓</span>
-                                                            </div>
-                                                        ) : (
-                                                            <p className="text-[#6B6B6B]">
-                                                                <span className="font-medium">{attr.key}:</span> {attr.value}
-                                                            </p>
+                                        {/* Custom Attributes - Clean display */}
+                                        {item.attributes.length > 0 && (() => {
+                                            // Parse attributes into friendly format
+                                            const shape = item.attributes.find((a: any) => a.key === 'Nail Shape')?.value;
+                                            const size = item.attributes.find((a: any) => a.key === 'Size')?.value;
+                                            const tier = item.attributes.find((a: any) => a.key === 'AI Analysis Category')?.value;
+                                            const designUrl = item.attributes.find((a: any) => a.key === 'Design Reference')?.value;
+                                            const handPhotos = item.attributes
+                                                .filter((a: any) => a.key.startsWith('Foto Mano'))
+                                                .map((a: any) => a.value);
+
+                                            // Check if it's a custom kit (has these attributes)
+                                            const isCustomKit = shape || size || tier;
+
+                                            if (!isCustomKit) {
+                                                // For non-custom items, don't show attributes
+                                                return null;
+                                            }
+
+                                            return (
+                                                <div className="mt-4 pt-4 border-t border-gray-100">
+                                                    {/* Summary Row */}
+                                                    <div className="flex flex-wrap items-center gap-2 text-sm">
+                                                        {tier && (
+                                                            <span className="bg-gradient-to-r from-[#FDE8EE] to-[#E8F4F8] text-[#D4847C] px-3 py-1 rounded-full font-medium text-xs">
+                                                                ✨ {tier}
+                                                            </span>
+                                                        )}
+                                                        {shape && (
+                                                            <span className="text-[#6B6B6B]">
+                                                                <span className="font-medium">Forma:</span> {shape}
+                                                            </span>
+                                                        )}
+                                                        {size && (
+                                                            <span className="text-[#6B6B6B]">
+                                                                <span className="font-medium">Talla:</span> {size}
+                                                            </span>
                                                         )}
                                                     </div>
-                                                ))}
-                                            </div>
-                                        )}
+
+                                                    {/* Photos Row - Compact thumbnails */}
+                                                    {(designUrl || handPhotos.length > 0) && (
+                                                        <div className="flex items-center gap-2 mt-3">
+                                                            <span className="text-xs text-[#6B6B6B]">Fotos:</span>
+                                                            <div className="flex gap-1">
+                                                                {designUrl && (
+                                                                    <div className="relative h-8 w-8 rounded border border-[#D4847C] overflow-hidden" title="Diseño de referencia">
+                                                                        <Image src={designUrl} alt="Diseño" fill className="object-cover" />
+                                                                    </div>
+                                                                )}
+                                                                {handPhotos.slice(0, 4).map((url: string, idx: number) => (
+                                                                    <div key={idx} className="relative h-8 w-8 rounded border border-gray-200 overflow-hidden" title={`Foto mano ${idx + 1}`}>
+                                                                        <Image src={url} alt={`Mano ${idx + 1}`} fill className="object-cover" />
+                                                                    </div>
+                                                                ))}
+                                                            </div>
+                                                            <span className="text-xs text-green-600">✓</span>
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            );
+                                        })()}
                                     </div>
                                 </div>
                             );

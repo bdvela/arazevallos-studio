@@ -12,6 +12,18 @@ interface FAQItem {
 
 const faqs: FAQItem[] = [
     {
+        question: '¿Cómo funciona el cotizador con IA?',
+        answer: 'Nuestro cotizador inteligente analiza la foto de tu diseño usando inteligencia artificial. Detecta la complejidad del diseño (acabados, texturas, nivel de detalle) y te asigna un precio justo en segundos. Solo sube una imagen de referencia y listo, sin esperar respuestas por DM.',
+    },
+    {
+        question: '¿Es confiable el precio que da la IA?',
+        answer: 'Sí, la IA está entrenada con criterios reales de Ara. Clasifica los diseños en 3 niveles: Básico (S/50), Intermedio (S/70) y Pro (S/90). Si tu diseño tiene características que lo hacen especialmente complejo, te contactaremos para afinar el precio antes de confirmar.',
+    },
+    {
+        question: '¿Qué pasa si la IA se equivoca con mi diseño?',
+        answer: 'Antes de procesar tu pedido, revisamos cada cotización manualmente. Si notamos que el nivel de complejidad real es diferente, te escribimos por WhatsApp para acordar el precio correcto. Nunca te cobraremos de más ni de menos sin avisarte.',
+    },
+    {
         question: '¿Cómo sé cuál es mi talla de press-on?',
         answer: 'Es muy fácil. Solo necesitas enviarnos 4 fotos de tus manos junto a una moneda de 1 sol como referencia: una de la mano izquierda, una de la mano derecha y una de cada pulgar por separado. Con estas imágenes, calculamos el ancho exacto de tus uñas para crear un set personalizado a tu medida. Te contactaremos por WhatsApp para guiarte en el proceso de ser necesario.',
     },

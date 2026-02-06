@@ -29,6 +29,7 @@ const productFragment = `
     title
     description
     descriptionHtml
+    productType
     options {
       id
       name

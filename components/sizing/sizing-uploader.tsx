@@ -17,6 +17,7 @@ interface SizingUploaderProps {
     onUploadComplete?: (images: { hands: string[], design: string | null }) => void;
     className?: string;
     showDesignUpload?: boolean;
+    initialPhotos?: string[];
 }
 
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
@@ -29,8 +30,25 @@ const handPositions = [
     { id: 'right-back', label: 'Mano derecha (dorso)', emoji: '✋' },
 ];
 
-export function SizingUploader({ onUploadComplete, className, showDesignUpload = false }: SizingUploaderProps) {
-    const [handPhotos, setHandPhotos] = useState<(UploadedImage | null)[]>([null, null, null, null]);
+export function SizingUploader({ onUploadComplete, className, showDesignUpload = false, initialPhotos = [] }: SizingUploaderProps) {
+    const [handPhotos, setHandPhotos] = useState<(UploadedImage | null)[]>(() => {
+        if (initialPhotos && initialPhotos.length > 0) {
+            // Map initial URLs to UploadedImage structure
+            const initial: (UploadedImage | null)[] = [null, null, null, null];
+            initialPhotos.forEach((url, i) => {
+                if (i < 4) {
+                    initial[i] = {
+                        file: new File([], "existing_image"), // Dummy file
+                        preview: url,
+                        uploadedUrl: url,
+                        type: 'hand'
+                    };
+                }
+            });
+            return initial;
+        }
+        return [null, null, null, null];
+    });
     const [designPhoto, setDesignPhoto] = useState<UploadedImage | null>(null);
     const [uploading, setUploading] = useState(false);
     const [currentUploadIndex, setCurrentUploadIndex] = useState<number | null>(null);

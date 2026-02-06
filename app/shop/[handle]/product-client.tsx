@@ -5,6 +5,8 @@ import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { SizingSection } from '@/components/shop/sizing-section';
+import { CustomKitWizard } from '@/components/shop/custom-kit-wizard';
+import { GiftCardSection } from '@/components/shop/gift-card-section';
 import DOMPurify from 'isomorphic-dompurify';
 import { ArrowLeft, Truck, Shield, Sparkles, Check } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -14,10 +16,17 @@ interface ProductPageClientProps {
 }
 
 export function ProductPageClient({ product }: ProductPageClientProps) {
-    const { title, descriptionHtml, priceRange, featuredImage } = product;
+    const { title, descriptionHtml, priceRange, featuredImage, productType } = product;
     const price = priceRange?.minVariantPrice?.amount;
     const currencyCode = priceRange?.minVariantPrice?.currencyCode;
+    const maxPrice = priceRange?.maxVariantPrice?.amount;
+    const isVariable = maxPrice && parseFloat(maxPrice) > parseFloat(price);
     const variantId = product.variants.edges[0]?.node.id;
+
+    const isGiftCard = productType === 'Gift Cards' || productType === 'Gift Card' || title.toLowerCase().includes('gift card') || title.toLowerCase().includes('tarjeta de regalo');
+
+    // Detect if this is a custom/personalized product (has variable pricing from AI tiers)
+    const isCustomProduct = isVariable && !isGiftCard;
 
     return (
         <div className="bg-[#FFFBFC] min-h-screen">
@@ -68,8 +77,9 @@ export function ProductPageClient({ product }: ProductPageClientProps) {
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.2 }}
-                        className="space-y-8"
+                        className="space-y-6"
                     >
+                        {/* Title & Price */}
                         <div>
                             <motion.h1
                                 initial={{ opacity: 0, y: 20 }}
@@ -80,12 +90,14 @@ export function ProductPageClient({ product }: ProductPageClientProps) {
                             >
                                 {title}
                             </motion.h1>
+
                             <motion.p
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ delay: 0.4 }}
-                                className="mt-4 text-4xl font-bold bg-gradient-to-r from-[#D4847C] to-[#E8A0B0] bg-clip-text text-transparent"
-                            >
+                                className="mt-4 text-2xl font-bold bg-gradient-to-r from-[#D4847C] to-[#E8A0B0] bg-clip-text text-transparent flex items-baseline gap-2"
+                            >|
+                                {isVariable && <span className="text-xl text-gray-400 font-medium">Desde</span>}
                                 {currencyCode === 'PEN' ? 'S/' : currencyCode === 'USD' ? '$' : currencyCode}{' '}
                                 {parseFloat(price).toFixed(2)}
                             </motion.p>
@@ -114,7 +126,7 @@ export function ProductPageClient({ product }: ProductPageClientProps) {
                                 { icon: Sparkles, label: 'Reutilizable' },
                                 { icon: Truck, label: 'Envío Nacional' },
                                 { icon: Shield, label: 'Kit Completo' },
-                            ].map((item, index) => (
+                            ].map((item) => (
                                 <motion.div
                                     key={item.label}
                                     whileHover={{ y: -3 }}
@@ -128,40 +140,39 @@ export function ProductPageClient({ product }: ProductPageClientProps) {
                             ))}
                         </motion.div>
 
-                        {/* Sizing Section */}
+                        {/* Main Action Area */}
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.7 }}
-                            className="bg-white rounded-2xl p-6 border border-[#F5B5C8]/30 shadow-lg"
                         >
-                            <h3 className="text-xl font-bold text-[#3D3D3D] mb-2 flex items-center gap-2" style={{ fontFamily: 'var(--font-playfair), serif' }}>
-                                📸 Talla Personalizada
-                            </h3>
-                            <p className="text-[#6B6B6B] text-sm mb-6">
-                                Sube fotos de tus manos con una moneda de referencia para calcular tu talla perfecta.
-                            </p>
-                            <SizingSection variantId={variantId} productHandle={product.handle} />
+                            {isGiftCard ? (
+                                <GiftCardSection product={product} />
+                            ) : (
+                                <CustomKitWizard product={product} />
+                            )}
                         </motion.div>
 
-                        {/* Info */}
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 0.8 }}
-                            className="bg-[#FDE8EE]/50 rounded-xl p-4 space-y-2"
-                        >
-                            {[
-                                'Incluye pegamento, lima e instrucciones',
-                                'Envío a todo el Perú',
-                                'Soporte por WhatsApp',
-                            ].map((text, index) => (
-                                <p key={index} className="text-sm text-[#6B6B6B] flex items-center gap-2">
-                                    <Check className="w-4 h-4 text-[#D4847C]" />
-                                    {text}
-                                </p>
-                            ))}
-                        </motion.div>
+                        {/* Additional Info */}
+                        {!isGiftCard && (
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                transition={{ delay: 0.8 }}
+                                className="bg-[#FDE8EE]/50 rounded-xl p-4 space-y-2"
+                            >
+                                {[
+                                    'Incluye pegamento, lima e instrucciones',
+                                    'Envío a todo el Perú',
+                                    'Soporte por WhatsApp',
+                                ].map((text, index) => (
+                                    <p key={index} className="text-sm text-[#6B6B6B] flex items-center gap-2">
+                                        <Check className="w-4 h-4 text-[#D4847C]" />
+                                        {text}
+                                    </p>
+                                ))}
+                            </motion.div>
+                        )}
                     </motion.div>
                 </div>
             </div>
