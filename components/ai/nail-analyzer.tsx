@@ -77,13 +77,19 @@ export default function NailAnalyzer({ mode = 'default', onAnalysisComplete }: N
             if (!res.ok) throw new Error('Analysis failed');
             const data: AnalysisResult = await res.json();
 
-            if (mode === 'wizard' && onAnalysisComplete) {
-                // Short delay to show the scanning animation for effect
-                setTimeout(() => {
-                    onAnalysisComplete(data, url);
-                }, 1500);
+            if (!data.isValid) {
+                setError(data.validationError || 'La imagen no parece ser un diseño de uñas.');
+                setResult(null);
+                setIsAnalyzing(false); // Stop analyzing if invalid
             } else {
-                setResult(data);
+                if (mode === 'wizard' && onAnalysisComplete) {
+                    // Short delay to show the scanning animation for effect
+                    setTimeout(() => {
+                        onAnalysisComplete(data, url);
+                    }, 1500);
+                } else {
+                    setResult(data);
+                }
             }
 
         } catch (err) {
@@ -118,7 +124,14 @@ export default function NailAnalyzer({ mode = 'default', onAnalysisComplete }: N
 
             if (res?.message === 'Success') {
                 // Could trigger a cart drawer open here if a context function was available
-                window.dispatchEvent(new Event('cart-updated'));
+                const event = new CustomEvent('cart-updated', {
+                    detail: {
+                        title: '✨ ¡Diseño escaneado!',
+                        message: 'Hemos reservado tu diseño único en el carrito.',
+                        type: 'success'
+                    }
+                });
+                window.dispatchEvent(event);
             } else {
                 throw new Error(res?.message);
             }
@@ -134,6 +147,7 @@ export default function NailAnalyzer({ mode = 'default', onAnalysisComplete }: N
         setImage(null);
         setResult(null);
         setError(null);
+        setIsAnalyzing(false); // Force stop analyzing state
         setSelectedSize('');
         if (fileInputRef.current) fileInputRef.current.value = '';
     };

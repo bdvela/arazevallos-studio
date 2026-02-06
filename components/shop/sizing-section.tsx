@@ -56,8 +56,8 @@ export function SizingSection({ variantId, isCustomProduct = false, productHandl
             if (result?.message === 'Success') {
                 const event = new CustomEvent('cart-updated', {
                     detail: {
-                        title: '¡Agregado al carrito!',
-                        message: isGiftCard ? 'Tarjeta de regalo agregada.' : 'Tu kit personalizado está listo.',
+                        title: '✨ ¡Listo para ti!',
+                        message: isGiftCard ? 'Tarjeta de regalo agregada con éxito.' : 'Tu kit personalizado ha sido reservado.',
                         type: 'success'
                     }
                 });

@@ -4,7 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight, Clock, Sparkles, Truck, Heart, Check, Palette, Shield } from "lucide-react";
 import { motion } from "framer-motion";
-import { FadeInUp, ScaleIn, SlideInLeft, SlideInRight, StaggerContainer, StaggerItem } from "@/components/ui/motion";
+import { FadeInUp, SlideInLeft, SlideInRight, StaggerContainer, StaggerItem } from "@/components/ui/motion";
+import { SectionHeader } from "@/components/ui/section";
 import { FAQSection } from "@/components/faq";
 
 const benefits = [
@@ -406,16 +407,13 @@ export default function PressOnPage() {
             </section>
 
             {/* Benefits */}
-            <section className="py-24 bg-[#FFFBFC]">
+            <section className="py-16 md:py-24 bg-[#FFFBFC]">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <FadeInUp className="text-center mb-16">
-                        <span className="text-[#D4847C] text-sm font-medium uppercase tracking-wider">
-                            Ventajas
-                        </span>
-                        <h2 className="mt-3 text-3xl md:text-4xl font-bold text-[#3D3D3D]" style={{ fontFamily: 'var(--font-playfair), serif' }}>
-                            ¿Por qué Press-On?
-                        </h2>
-                    </FadeInUp>
+                    <SectionHeader
+                        label="Ventajas"
+                        title="¿Por qué"
+                        titleAccent="Press-On?"
+                    />
 
                     <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {benefits.map((benefit) => (
@@ -442,16 +440,13 @@ export default function PressOnPage() {
             </section>
 
             {/* How it Works */}
-            <section id="como-funciona" className="py-24 bg-white scroll-mt-24">
+            <section id="como-funciona" className="py-16 md:py-24 bg-white scroll-mt-24">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <FadeInUp className="text-center mb-16">
-                        <span className="text-[#D4847C] text-sm font-medium uppercase tracking-wider">
-                            Proceso Simple
-                        </span>
-                        <h2 className="mt-3 text-3xl md:text-4xl font-bold text-[#3D3D3D]" style={{ fontFamily: 'var(--font-playfair), serif' }}>
-                            ¿Cómo Funciona?
-                        </h2>
-                    </FadeInUp>
+                    <SectionHeader
+                        label="Proceso Simple"
+                        title="¿Cómo"
+                        titleAccent="Funciona?"
+                    />
 
                     <div className="grid md:grid-cols-3 gap-8">
                         {steps.map((step, index) => (
@@ -557,19 +552,22 @@ export default function PressOnPage() {
             {/* FAQ Section */}
             <FAQSection />
 
-            {/* CTA */}
-            <section className="py-24 bg-gradient-to-r from-[#D4847C] to-[#E8A0B0]">
+            {/* CTA - Use custom since it has specific product link */}
+            <section className="py-16 md:py-24 bg-gradient-to-r from-[#D4847C] to-[#E8A0B0]">
                 <FadeInUp className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-6" style={{ fontFamily: 'var(--font-playfair), serif' }}>
-                        ¿Lista para tener uñas perfectas sin salir de casa?
+                    <h2
+                        className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 sm:mb-6"
+                        style={{ fontFamily: 'var(--font-playfair), serif' }}
+                    >
+                        ¿Lista para tus uñas perfectas?
                     </h2>
-                    <p className="text-white/90 text-lg mb-8 max-w-2xl mx-auto">
-                        Explora nuestra colección de diseños y encuentra tu match perfecto.
+                    <p className="text-white/90 text-base sm:text-lg mb-6 sm:mb-8 max-w-2xl mx-auto">
+                        Explora nuestra colección y encuentra tu diseño ideal.
                     </p>
-                    <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
+                    <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
                         <Link
                             href="/shop/kit-press-on-personalizado"
-                            className="inline-flex items-center gap-2 bg-white text-[#D4847C] px-10 py-5 rounded-full font-semibold hover:bg-[#FFFBFC] transition-colors text-lg"
+                            className="inline-flex items-center gap-2 bg-white text-[#D4847C] px-6 sm:px-10 py-3 sm:py-4 rounded-full font-semibold hover:bg-[#FFFBFC] transition-colors min-h-[44px]"
                         >
                             Comprar Kit Personalizado
                             <ArrowRight className="w-5 h-5" />

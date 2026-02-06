@@ -16,8 +16,8 @@ export function DeleteItemButton({ lineId }: { lineId: string }) {
             if (result.message === 'Success') {
                 const event = new CustomEvent('cart-updated', {
                     detail: {
-                        title: 'Eliminado del carrito',
-                        message: 'El producto ha sido removido correctamente.',
+                        title: 'Producto eliminado',
+                        message: 'El producto ha sido removido del carrito.',
                         type: 'delete'
                     }
                 });

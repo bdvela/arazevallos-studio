@@ -1,7 +1,5 @@
 'use client';
 
-import { getProduct } from '@/lib/shopify';
-import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { SizingSection } from '@/components/shop/sizing-section';
@@ -10,9 +8,10 @@ import { GiftCardSection } from '@/components/shop/gift-card-section';
 import DOMPurify from 'isomorphic-dompurify';
 import { ArrowLeft, Truck, Shield, Sparkles, Check } from 'lucide-react';
 import { motion } from 'framer-motion';
+import type { Product } from '@/types/shopify';
 
 interface ProductPageClientProps {
-    product: any;
+    product: Product;
 }
 
 export function ProductPageClient({ product }: ProductPageClientProps) {
@@ -115,6 +114,20 @@ export function ProductPageClient({ product }: ProductPageClientProps) {
                             </motion.div>
                         )}
 
+
+
+                        {/* Main Action Area */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.7 }}
+                        >
+                            {isGiftCard ? (
+                                <GiftCardSection product={product} />
+                            ) : (
+                                <CustomKitWizard product={product} />
+                            )}
+                        </motion.div>
                         {/* Benefits */}
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
@@ -139,20 +152,6 @@ export function ProductPageClient({ product }: ProductPageClientProps) {
                                 </motion.div>
                             ))}
                         </motion.div>
-
-                        {/* Main Action Area */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.7 }}
-                        >
-                            {isGiftCard ? (
-                                <GiftCardSection product={product} />
-                            ) : (
-                                <CustomKitWizard product={product} />
-                            )}
-                        </motion.div>
-
                         {/* Additional Info */}
                         {!isGiftCard && (
                             <motion.div

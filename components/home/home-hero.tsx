@@ -105,44 +105,7 @@ export function HomeHero() {
                                 className="object-cover"
                                 priority
                             />
-                            {/* Gradient Overlay */}
-                            <div className="absolute inset-0 rounded-2xl" />
                         </motion.div>
-
-                        {/* Floating Stats Cards */}
-                        {/* <motion.div
-                            initial={{ opacity: 0, x: -50 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 0.8, duration: 0.5 }}
-                            className="absolute -left-4 md:-left-8 top-1/4 backdrop-blur-lg bg-white/90 p-4 rounded-2xl shadow-xl border border-[#F5B5C8]/30"
-                        >
-                            <div className="flex items-center gap-3">
-                                <div className="w-12 h-12 bg-gradient-to-r from-[#D4847C] to-[#E8A0B0] rounded-xl flex items-center justify-center">
-                                    <span className="text-xl">⭐</span>
-                                </div>
-                                <div>
-                                    <p className="text-lg font-bold text-[#3D3D3D]">+500</p>
-                                    <p className="text-xs text-[#6B6B6B]">Clientes felices</p>
-                                </div>
-                            </div>
-                        </motion.div>
-
-                        <motion.div
-                            initial={{ opacity: 0, x: 50 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            transition={{ delay: 1, duration: 0.5 }}
-                            className="absolute -right-4 md:-right-8 bottom-1/4 backdrop-blur-lg bg-white/90 p-4 rounded-2xl shadow-xl border border-[#F5B5C8]/30"
-                        >
-                            <div className="flex items-center gap-3">
-                                <div className="w-12 h-12 bg-gradient-to-r from-[#7EC8E3] to-[#A8D8EA] rounded-xl flex items-center justify-center">
-                                    <span className="text-xl">🚚</span>
-                                </div>
-                                <div>
-                                    <p className="text-lg font-bold text-[#3D3D3D]">Envío</p>
-                                    <p className="text-xs text-[#6B6B6B]">A nivel nacional</p>
-                                </div>
-                            </div>
-                        </motion.div> */}
                     </HeroImage>
                 </div>
                 <FadeInUp delay={0.6}>

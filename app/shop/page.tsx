@@ -47,17 +47,17 @@ export default async function ShopPage({
             <section className="pt-32 pb-12 bg-gradient-to-br from-[#FDE8EE] via-[#FFFBFC] to-white">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <Link
-                        href="/press-on"
+                        href="/"
                         className="inline-flex items-center gap-2 text-[#D4847C] text-sm font-medium mb-6 hover:text-[#E8A0B0] transition-colors"
                     >
                         <ArrowLeft className="w-4 h-4" />
-                        Volver a Press-On
+                        Volver al Inicio
                     </Link>
                     <h1 className="text-4xl md:text-5xl font-bold text-[#3D3D3D]" style={{ fontFamily: 'var(--font-playfair), serif' }}>
-                        Tienda <span className="text-[#D4847C] italic">Press-On</span>
+                        Productos <span className="text-[#D4847C] italic">Exclusivos</span>
                     </h1>
                     <p className="mt-4 text-lg text-[#6B6B6B] max-w-2xl">
-                        Diseños exclusivos hechos a mano con amor. Encuentra tu match perfecto.
+                        Kits, Gift Cards y experiencias exclusivas. Todo lo que necesitas en un solo lugar.
                     </p>
                 </div>
             </section>
@@ -79,7 +79,7 @@ export default async function ShopPage({
                     {/* Results count */}
                     <div className="mb-6 flex items-center justify-between">
                         <p className="text-sm text-[#6B6B6B]">
-                            {filteredProducts.length} {filteredProducts.length === 1 ? 'diseño' : 'diseños'}
+                            {filteredProducts.length} {filteredProducts.length === 1 ? 'producto' : 'productos'}
                             {selectedCollection && (
                                 <span className="ml-1">
                                     en <span className="font-medium text-[#D4847C]">
@@ -104,8 +104,8 @@ export default async function ShopPage({
                         <div className="text-center py-20 bg-white rounded-3xl border border-[#F5B5C8]/30">
                             <p className="text-[#6B6B6B] text-lg mb-4">
                                 {selectedCollection
-                                    ? 'No hay diseños en esta colección todavía 💅'
-                                    : 'Próximamente nuevos diseños 💅'
+                                    ? 'No hay productos en esta colección todavía ✨'
+                                    : 'Próximamente nuevos productos ✨'
                                 }
                             </p>
                             <p className="text-[#6B6B6B]">Síguenos en Instagram para enterarte primero</p>

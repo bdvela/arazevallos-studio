@@ -1,11 +1,13 @@
 'use client';
 
 import Image from "next/image";
-import Link from "next/link";
-import { ArrowRight, Instagram, MessageCircle, MapPin, Heart, Sparkles, Star } from "lucide-react";
+import { Instagram, MapPin, Heart, Sparkles, Star } from "lucide-react";
 import { motion } from "framer-motion";
 import { FadeInUp, SlideInLeft, SlideInRight, StaggerContainer, StaggerItem } from "@/components/ui/motion";
 import { GallerySection } from "@/components/gallery";
+import { Section, SectionHeader } from "@/components/ui/section";
+import { CTASection, ctaPresets } from "@/components/ui/cta-section";
+import { GoogleMap } from "@/components/common/google-map";
 
 const values = [
     {
@@ -225,94 +227,18 @@ export default function AboutPage() {
             />
 
             {/* Location Section */}
-            <section className="py-24 bg-white">
-                <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-                    <FadeInUp className="text-center mb-12">
-                        <span className="text-[#D4847C] text-sm font-medium uppercase tracking-wider">
-                            Ubicación
-                        </span>
-                        <h2 className="mt-3 text-3xl md:text-4xl font-bold text-[#3D3D3D]" style={{ fontFamily: 'var(--font-playfair), serif' }}>
-                            Visítanos en el Studio
-                        </h2>
-                        <p className="mt-4 text-[#6B6B6B] max-w-xl mx-auto">
-                            Un espacio acogedor diseñado para que disfrutes de la experiencia completa.
-                        </p>
-                    </FadeInUp>
-
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="rounded-3xl overflow-hidden shadow-xl border border-[#F5B5C8]/30"
-                    >
-                        <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3930.1545372234887!2d-76.2394521!3d-9.9210847!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91a7c3003477179b%3A0xd38a3cbd81c15a86!2sAra%20Zevallos%20Studio!5e0!3m2!1sen!2spe!4v1769885790307!5m2!1sen!2spe"
-                            width="100%"
-                            height="400"
-                            style={{ border: 0 }}
-                            allowFullScreen
-                            loading="lazy"
-                            referrerPolicy="no-referrer-when-downgrade"
-                        />
-                    </motion.div>
-
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.2 }}
-                        className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-4"
-                    >
-                        <div className="flex items-center gap-2 text-[#6B6B6B]">
-                            <MapPin className="w-5 h-5 text-[#D4847C]" />
-                            <span>Huánuco, Perú</span>
-                        </div>
-                        <motion.a
-                            whileHover={{ scale: 1.02 }}
-                            href="https://maps.app.goo.gl/5tX6ttp5mhfp4GfH6"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 text-[#D4847C] hover:text-[#c06b64] transition-colors font-medium"
-                        >
-                            Abrir en Google Maps →
-                        </motion.a>
-                    </motion.div>
-                </div>
-            </section>
+            <Section variant="white" padding="lg" container="lg">
+                <SectionHeader
+                    label="Ubicación"
+                    title="Visítanos en el"
+                    titleAccent="Studio"
+                    description="Un espacio acogedor diseñado para que disfrutes de la experiencia completa."
+                />
+                <GoogleMap height={400} />
+            </Section>
 
             {/* CTA */}
-            <section className="py-20 bg-gradient-to-r from-[#D4847C] to-[#E8A0B0]">
-                <FadeInUp className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center">
-                    <h2 className="text-3xl md:text-4xl font-bold text-white mb-6" style={{ fontFamily: 'var(--font-playfair), serif' }}>
-                        ¿Lista para vivir la experiencia?
-                    </h2>
-                    <p className="text-white/90 text-lg mb-8">
-                        Agenda tu cita o pide tus Press-On Nails con envío a todo el Perú
-                    </p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <motion.a
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.98 }}
-                            href="https://wa.link/b5c2z6"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center gap-2 bg-white text-[#D4847C] px-8 py-4 rounded-full font-semibold hover:bg-[#FFFBFC] transition-colors"
-                        >
-                            <MessageCircle className="w-5 h-5" />
-                            Reservar Cita
-                        </motion.a>
-                        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
-                            <Link
-                                href="/shop"
-                                className="inline-flex items-center justify-center gap-2 bg-transparent border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white/10 transition-colors"
-                            >
-                                Comprar Press-On
-                                <ArrowRight className="w-4 h-4" />
-                            </Link>
-                        </motion.div>
-                    </div>
-                </FadeInUp>
-            </section>
+            <CTASection {...ctaPresets.fullExperience} />
         </div>
     );
 }

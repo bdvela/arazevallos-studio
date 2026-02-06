@@ -17,6 +17,7 @@ import { Footer } from "@/components/layout/footer";
 import { WhatsAppButton } from "@/components/whatsapp-button";
 import { InitialLoader } from "@/components/initial-loader";
 import { ScrollToTop } from "@/components/scroll-to-top";
+import { PromoPopup } from "@/components/layout/promo-popup";
 
 export const metadata: Metadata = {
   title: "Ara Zevallos Studio | Belleza Premium en Huánuco",
@@ -44,6 +45,7 @@ export default function RootLayout({
       >
         <InitialLoader />
         <ScrollToTop />
+        <PromoPopup />
         <Navbar />
         <main className="min-h-screen">
           {children}

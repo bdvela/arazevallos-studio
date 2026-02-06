@@ -115,6 +115,37 @@ export function HomePressOn() {
                             ))}
                         </StaggerContainer>
 
+                        {/* AI Custom Design CTA */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="p-1 rounded-2xl bg-gradient-to-r from-[#D4847C]/20 via-[#E8A0B0]/20 to-[#D4847C]/20"
+                        >
+                            <div className="bg-white/80 backdrop-blur-sm rounded-xl p-5 relative overflow-hidden group hover:bg-white/90 transition-all">
+                                <div className="absolute top-0 right-0 -mr-4 -mt-4 w-24 h-24 bg-[#D4847C]/10 rounded-full blur-2xl group-hover:bg-[#D4847C]/20 transition-all" />
+
+                                <div className="relative z-10 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+                                    <div className="space-y-1">
+                                        <div className="flex items-center gap-2 mb-1">
+                                            <Sparkles className="w-4 h-4 text-[#D4847C]" />
+                                            <span className="text-xs font-bold tracking-wider text-[#D4847C] uppercase">IA Powered</span>
+                                        </div>
+                                        <h3 className="font-bold text-[#3D3D3D]">¿Diseño Personalizado?</h3>
+                                        <p className="text-sm text-[#6B6B6B]">Cotiza y compra tu diseño soñado directamente.</p>
+                                    </div>
+
+                                    <Link
+                                        href="/shop/kit-press-on-personalizado"
+                                        className="shrink-0 px-4 py-2 bg-gradient-to-r from-[#D4847C] to-[#E8A0B0] text-white text-sm font-medium rounded-lg shadow-lg shadow-[#D4847C]/20 hover:shadow-xl hover:scale-105 transition-all flex items-center gap-2"
+                                    >
+                                        Crear Kit
+                                        <Sparkles className="w-3 h-3" />
+                                    </Link>
+                                </div>
+                            </div>
+                        </motion.div>
+
                         <motion.div whileHover={{ x: 5 }}>
                             <Link
                                 href="/shop"

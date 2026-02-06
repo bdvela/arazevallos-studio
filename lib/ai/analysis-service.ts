@@ -16,22 +16,27 @@ export interface AnalysisResult {
     reason: string;
     variantId?: string;
     confidence: number;
+    isValid: boolean;
+    validationError?: string;
 }
 
-const PRICING = {
-    BASIC: { min: 50, max: 60, default: 55 },
-    INTERMEDIATE: { min: 60, max: 75, default: 65 },
-    PRO: { min: 75, max: 90, default: 80 }
+/**
+ * IMPORTANT: FIXED PRICES PER TIER
+ * This ensures consistency. The AI only decides the TIER, not the exact price.
+ * The price is determined by this map, guaranteeing the same tier = same price.
+ */
+const TIER_PRICES: Record<DesignTier, number> = {
+    BASIC: 55,
+    INTERMEDIATE: 70,
+    PRO: 85
 };
 
-// Supported price points for Shopify Variants (increments of 5)
-const SUPPORTED_PRICES = [50, 55, 60, 65, 70, 75, 80, 85, 90];
-
-function findNearestPrice(price: number): number {
-    return SUPPORTED_PRICES.reduce((prev, curr) => {
-        return (Math.abs(curr - price) < Math.abs(prev - price) ? curr : prev);
-    });
-}
+// Mapping for Shopify Variants
+const TIER_VARIANT_KEYS: Record<DesignTier, string> = {
+    BASIC: 'SHOPIFY_VARIANT_ID_55',
+    INTERMEDIATE: 'SHOPIFY_VARIANT_ID_70',
+    PRO: 'SHOPIFY_VARIANT_ID_85'
+};
 
 export async function analyzeNailDesign(imageUrl: string): Promise<AnalysisResult> {
     if (!apiKey) {
@@ -39,7 +44,13 @@ export async function analyzeNailDesign(imageUrl: string): Promise<AnalysisResul
     }
 
     try {
-        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+        const model = genAI.getGenerativeModel({
+            model: "gemini-2.5-flash",
+            generationConfig: {
+                temperature: 0.0,
+                topK: 1
+            }
+        });
 
         // Fetch image and convert to base64
         const imageResponse = await fetch(imageUrl);
@@ -48,27 +59,61 @@ export async function analyzeNailDesign(imageUrl: string): Promise<AnalysisResul
         const base64Image = Buffer.from(arrayBuffer).toString("base64");
 
         const prompt = `
-        Act as a professional nail art pricing expert. Analyze this nail design image and classify it into one of these 3 distinct tiers based on its complexity:
+You are an expert nail art pricing assistant for a press-on nail studio.
+Your task is to classify a nail design image into ONE of three price tiers: BASIC, INTERMEDIATE, or PRO.
 
-        1. BASIC (S/ 50 - S/ 60): Solid colors, classic French, cat-eye French, minimalist rhinestones, simple glitter.
-        2. INTERMEDIATE (S/ 60 - S/ 75): Chrome effects, cat-eye, simple line art, stickers, medium-level crystal placement, ombré, sweater effect, blooming effect, encapsulated designs.
-        3. PROFESSIONAL (S/ 75 - S/ 90): Complex hand-drawn art (characters, intricate patterns), 3D crystals/charms, pronounced reliefs, mirror effect, different complex designs on each nail.
+--- STEP 1: VALIDATE ---
+First, determine if this image shows nails, hands with nails, or nail art.
+If NOT (e.g., a landscape, pet, document, selfie without hand focus), return:
+{"isValid": false, "validationError": "No detectamos un diseño de uñas. Por favor sube una referencia de un diseño.", "tier": null, "reason": null, "confidence": 0}
 
-        CRITICAL PRICING RULES:
-        1. "The Weakest Link": If the design is simple but contains even ONE element from a higher tier (e.g., one 3D charm on a Basic set), you MUST classify it in the higher tier or the very top price of the current tier.
-        2. Price Precision: Do not just pick the average price. 
-           - Use the lower end (e.g., S/ 60) for sparse/simple execution of that tier.
-           - Use the higher end (e.g., S/ 75) for dense/complex execution (all nails have designs).
+--- STEP 2: CLASSIFY (If Valid) ---
+Use the "HIGHEST ELEMENT" RULE: If a design contains ANY technique from a higher tier, it MUST be classified in that higher tier. Do not average or downgrade.
 
-        Analyze strictly based on visual evidence.
-        
-        Return ONLY a raw JSON object (no markdown formatting) with this structure:
-        {
-            "tier": "BASIC" | "INTERMEDIATE" | "PRO",
-            "suggested_price": number, // Specific price based on complexity within the tier range.
-            "reason": "Brief explanation of why this level is appropriate (maximum 20 words). In Spanish.",
-            "confidence": 0.1 to 1.0
-        }
+=== TIER DEFINITIONS ===
+
+**BASIC (S/ 55)**
+- Solid single color (no effects).
+- Traditional French Tip (painted polish only, any color).
+- French with Cat-Eye powder line (just the tip line has cat-eye).
+- Minimalist: 1-2 small rhinestones per hand, simple glitter accent.
+EXAMPLES:
+- Red French tip -> BASIC
+- Nude with shimmer top coat -> BASIC
+- French with cat-eye line on the smile line -> BASIC
+
+**INTERMEDIATE (S/ 70)**
+- Full Cat-Eye effect (magnet effect covers the whole nail, not just a line).
+- Chrome / Glazed / Aurora / Pearl (entire nail or significant coverage).
+- Ombré / Baby Boomer / Aura / Gradient.
+- Simple hand-painted art (lines, swirls, minimal flowers).
+- Stickers / Stamps / Decals.
+- Marble / Blooming gel / Tortoise shell.
+- Velvet effect.
+EXAMPLES:
+- Full velvet cat-eye on all nails -> INTERMEDIATE
+- Chrome French (French tip with chrome powder) -> INTERMEDIATE
+- Baby boomer with shimmer -> INTERMEDIATE
+- Simple flower doodle on accent nail -> INTERMEDIATE
+
+**PRO (S/ 85)**
+- Complex hand-painted art (characters, detailed portraits, intricate patterns, realistic flowers).
+- 3D elements (charms, heavy crystal arrangements, raised gel art).
+- Mix & Match (each nail has a DIFFERENT complex design).
+- Encapsulated elements (dried flowers, foil inside the gel).
+EXAMPLES:
+- Sanrio characters painted on each nail -> PRO
+- Large 3D bows or charms -> PRO
+- Detailed lace pattern across all nails -> PRO
+
+--- STEP 3: OUTPUT ---
+Return ONLY a raw JSON object (no markdown, no backticks) with this structure:
+{
+    "isValid": true,
+    "tier": "BASIC" | "INTERMEDIATE" | "PRO",
+    "reason": "1-sentence explanation IN SPANISH, focusing on the KEY element that determined the tier.",
+    "confidence": 0.8 to 1.0
+}
         `;
 
         const result = await model.generateContent([
@@ -85,25 +130,28 @@ export async function analyzeNailDesign(imageUrl: string): Promise<AnalysisResul
         const cleanedText = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
         const data = JSON.parse(cleanedText);
 
-        const tierKey = data.tier as DesignTier;
-        let finalPrice = data.suggested_price;
-
-        // Fallback or Sanity Check for price
-        if (!finalPrice || typeof finalPrice !== 'number') {
-            finalPrice = PRICING[tierKey]?.default || 55;
+        // Validation Check
+        if (data.isValid === false || data.tier === null) {
+            return {
+                isValid: false,
+                validationError: data.validationError || 'No se detectaron uñas en la imagen.',
+                tier: 'BASIC',
+                price: 0,
+                reason: '',
+                confidence: data.confidence || 0,
+            };
         }
 
-        // Snap to nearest supported Shopify variant price
-        finalPrice = findNearestPrice(finalPrice);
+        const tierKey = data.tier as DesignTier;
 
-        // Construct Variant ID Env Key (e.g., SHOPIFY_VARIANT_ID_55)
-        // Since we likely don't have all env vars set up yet, we'll try to look it up
-        // For now, we fall back to the main tier variants if specific ones aren't found, 
-        // OR we just perform the logic assuming the user will create them.
-        const variantIdKey = `SHOPIFY_VARIANT_ID_${finalPrice}`;
-        const variantId = process.env[variantIdKey] || process.env[`SHOPIFY_VARIANT_ID_${tierKey}`];
+        // FIXED PRICE from tier - NO AI VARIANCE
+        const finalPrice = TIER_PRICES[tierKey];
+
+        // Get variant ID from env, or use a fallback for development
+        const variantId = process.env[TIER_VARIANT_KEYS[tierKey]] || 'gid://shopify/ProductVariant/placeholder';
 
         return {
+            isValid: true,
             tier: tierKey,
             price: finalPrice,
             reason: data.reason,

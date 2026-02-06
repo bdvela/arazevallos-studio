@@ -24,7 +24,7 @@ export default async function CartPage() {
                         Tu carrito está vacío
                     </h1>
                     <p className="text-[#6B6B6B] mb-8">
-                        Aún no has agregado ningún diseño a tu carrito
+                        Aún no has agregado ningún producto a tu carrito
                     </p>
                     <Link
                         href="/shop"

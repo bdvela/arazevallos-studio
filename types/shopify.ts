@@ -54,6 +54,7 @@ export interface ShopifyProduct {
     title: string;
     description: string;
     descriptionHtml: string;
+    productType: string;
     options: {
         id: string;
         name: string;
@@ -164,3 +165,19 @@ export interface ShopifyCart {
 export interface CartLineAttributes {
     [key: string]: string;
 }
+
+// ============================================
+// Alias de conveniencia
+// ============================================
+
+/** Alias para ShopifyProduct - más corto y común */
+export type Product = ShopifyProduct;
+
+/** Alias para ShopifyProductCard */
+export type ProductCard = ShopifyProductCard;
+
+/** Alias para ShopifyCollection */
+export type Collection = ShopifyCollection;
+
+/** Alias para ShopifyCart */
+export type Cart = ShopifyCart;

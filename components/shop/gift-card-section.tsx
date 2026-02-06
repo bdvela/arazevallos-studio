@@ -37,8 +37,8 @@ export function GiftCardSection({ product }: GiftCardSectionProps) {
             if (result?.message === 'Success') {
                 const event = new CustomEvent('cart-updated', {
                     detail: {
-                        title: '¡Agregado al carrito!',
-                        message: 'Tarjeta de regalo agregada.',
+                        title: '🎁 ¡Regalo añadido!',
+                        message: 'Tarjeta de regalo lista en tu carrito.',
                         type: 'success'
                     }
                 });
