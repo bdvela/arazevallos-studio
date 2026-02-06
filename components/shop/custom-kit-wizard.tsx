@@ -46,7 +46,7 @@ export function CustomKitWizard({ product }: CustomKitWizardProps) {
     const shapes = [
         {
             id: 'almond',
-            label: 'Almendra',
+            label: 'Almendrada',
             path: 'M12 2C12 2 5 12 5 22C5 27.5228 9.47715 32 15 32C20.5228 32 25 27.5228 25 22C25 12 18 2 18 2L12 2Z',
             description: 'Elegante y alargada'
         },
@@ -61,25 +61,13 @@ export function CustomKitWizard({ product }: CustomKitWizardProps) {
             label: 'Stiletto',
             path: 'M15 32C15 32 5 20 5 10C5 4 8 2 15 2C22 2 25 4 25 10C25 20 15 32 15 32Z',
             description: 'Dramática y puntiaguda'
-        },
-        {
-            id: 'square',
-            label: 'Cuadrada',
-            path: 'M6 2H24V30C24 31.1046 23.1046 32 22 32H8C6.89543 32 6 31.1046 6 30V2Z',
-            description: 'Clásica y versátil'
-        },
-        {
-            id: 'oval',
-            label: 'Ovalada',
-            path: 'M15 32C20.5228 32 25 25.2843 25 17V2H5V17C5 25.2843 9.47715 32 15 32Z',
-            description: 'Natural y suave'
         }
     ];
 
     const sizes = [
-        { id: 'S', label: 'S', description: 'Manos pequeñas/delgadas' },
-        { id: 'M', label: 'M', description: 'Tamaño más común', recommended: true },
-        { id: 'L', label: 'L', description: 'Manos grandes/anchas' }
+        { id: 'S', label: 'S', description: 'Largo Corto (Natural)' },
+        { id: 'M', label: 'M', description: 'Largo Medio (Estándar)', recommended: true },
+        { id: 'L', label: 'L', description: 'Largo Extendido (Glam)' }
     ];
 
     // Get current step index for progress bar
@@ -167,7 +155,7 @@ export function CustomKitWizard({ product }: CustomKitWizardProps) {
                                 >
                                     {isCompleted ? <Check className="w-5 h-5" /> : <Icon className="w-4 h-4" />}
                                 </motion.div>
-                                <span className={`text-xs mt-2 font-medium transition-colors ${isActive ? 'text-[#D4847C]' : isCompleted ? 'text-gray-600' : 'text-gray-400'
+                                <span className={`text-xs mt-2 font-medium transition-colors hidden md:block ${isActive ? 'text-[#D4847C]' : isCompleted ? 'text-gray-600' : 'text-gray-400'
                                     }`}>
                                     {s.label}
                                 </span>
@@ -191,8 +179,8 @@ export function CustomKitWizard({ product }: CustomKitWizardProps) {
     );
 
     return (
-        <div className="bg-white rounded-3xl border border-pink-100 shadow-xl overflow-hidden min-h-[600px] flex flex-col">
-            <div className="p-6 flex-1">
+        <div className="bg-white rounded-3xl border border-pink-100 shadow-xl overflow-hidden min-h-[500px] md:min-h-[600px] flex flex-col">
+            <div className="p-4 md:p-6 flex-1">
                 {/* Progress Stepper */}
                 <ProgressStepper />
 
@@ -231,7 +219,7 @@ export function CustomKitWizard({ product }: CustomKitWizardProps) {
 
                             <motion.button
                                 onClick={() => setStep('analyze')}
-                                className="bg-gradient-to-r from-[#D4847C] to-[#E8A0B0] text-white px-10 py-4 rounded-full font-bold text-lg shadow-xl shadow-[#D4847C]/30 hover:shadow-2xl hover:shadow-[#D4847C]/40 transition-all flex items-center gap-2"
+                                className="w-full sm:w-auto bg-gradient-to-r from-[#D4847C] to-[#E8A0B0] text-white px-10 py-4 rounded-full font-bold text-lg shadow-xl shadow-[#D4847C]/30 hover:shadow-2xl hover:shadow-[#D4847C]/40 transition-all flex items-center justify-center gap-2"
                                 whileHover={{ scale: 1.02, y: -2 }}
                                 whileTap={{ scale: 0.98 }}
                             >
@@ -332,10 +320,10 @@ export function CustomKitWizard({ product }: CustomKitWizardProps) {
                                 </div>
                             </motion.div>
 
-                            <div className="flex gap-3 pt-4">
+                            <div className="flex flex-col sm:flex-row gap-3 pt-4">
                                 <button
                                     onClick={() => setStep('analyze')}
-                                    className="px-6 py-3 rounded-xl border border-gray-200 text-gray-500 font-medium hover:bg-gray-50 transition-colors flex items-center gap-2"
+                                    className="px-6 py-3 rounded-xl border border-gray-200 text-gray-500 font-medium hover:bg-gray-50 transition-colors flex items-center justify-center gap-2"
                                 >
                                     <RefreshCcw className="w-4 h-4" /> Otro diseño
                                 </button>
@@ -410,12 +398,12 @@ export function CustomKitWizard({ product }: CustomKitWizardProps) {
                             <div>
                                 <h3 className="text-xl font-bold mb-2 text-gray-800">Elige tu Talla</h3>
                                 <p className="text-sm text-gray-500 mb-4">Basado en el tamaño de tus manos</p>
-                                <div className="flex gap-3">
+                                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                                     {sizes.map((s) => (
                                         <motion.button
                                             key={s.id}
                                             onClick={() => setSelectedSize(s.id)}
-                                            className={`flex-1 py-4 px-3 rounded-2xl border-2 transition-all relative ${selectedSize === s.id
+                                            className={`py-4 px-3 rounded-2xl border-2 transition-all relative ${selectedSize === s.id
                                                 ? 'border-[#D4847C] bg-gradient-to-br from-[#FDE8EE] to-white shadow-lg'
                                                 : 'border-gray-100 hover:border-gray-200'
                                                 }`}
@@ -449,7 +437,7 @@ export function CustomKitWizard({ product }: CustomKitWizardProps) {
                                 <motion.button
                                     disabled={!selectedShape || !selectedSize}
                                     onClick={() => setStep('measurements')}
-                                    className="bg-gradient-to-r from-[#D4847C] to-[#E8A0B0] text-white px-8 py-3 rounded-full font-bold disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-[#D4847C]/20 flex items-center gap-2"
+                                    className="w-full sm:w-auto bg-gradient-to-r from-[#D4847C] to-[#E8A0B0] text-white px-8 py-3 rounded-full font-bold disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-[#D4847C]/20 flex items-center justify-center gap-2"
                                     whileHover={selectedShape && selectedSize ? { scale: 1.02 } : {}}
                                     whileTap={selectedShape && selectedSize ? { scale: 0.98 } : {}}
                                 >

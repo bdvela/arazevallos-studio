@@ -120,7 +120,7 @@ export function HomePressOn() {
                                 href="/shop"
                                 className="btn-primary inline-flex items-center gap-2 group"
                             >
-                                Explorar Catálogo
+                                Explorar Productos
                                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                             </Link>
                         </motion.div>

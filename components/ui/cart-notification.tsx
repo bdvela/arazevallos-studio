@@ -48,7 +48,7 @@ export function CartNotification() {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     exit={{ opacity: 0, y: -20, scale: 0.95 }}
                     transition={{ duration: 0.3, ease: 'backOut' }}
-                    className="fixed top-24 right-4 z-50 w-full max-w-sm"
+                    className="fixed top-24 left-4 right-4 md:left-auto md:right-4 z-50 w-auto md:w-full md:max-w-sm"
                 >
                     <div className="bg-white/90 backdrop-blur-xl border border-[#F5B5C8]/50 p-4 rounded-2xl shadow-xl shadow-pink-100/50 flex items-start gap-4">
                         <div className={`p-2 rounded-full shrink-0 ${notification.type === 'delete' ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'}`}>

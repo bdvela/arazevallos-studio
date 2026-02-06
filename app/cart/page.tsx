@@ -30,7 +30,7 @@ export default async function CartPage() {
                         href="/shop"
                         className="btn-primary inline-flex items-center gap-2"
                     >
-                        Explorar Diseños
+                        Explorar Productos
                     </Link>
                 </div>
             </div>
@@ -58,8 +58,8 @@ export default async function CartPage() {
                         {cart.lines.edges.map((edge: any) => {
                             const item = edge.node;
                             return (
-                                <div key={item.id} className="flex gap-6 bg-white p-6 rounded-2xl border border-[#F5B5C8]/30">
-                                    <div className="relative h-28 w-28 flex-none rounded-xl bg-[#FDE8EE] overflow-hidden">
+                                <div key={item.id} className="flex gap-4 sm:gap-6 bg-white p-4 sm:p-6 rounded-2xl border border-[#F5B5C8]/30">
+                                    <div className="relative h-20 w-20 sm:h-28 sm:w-28 flex-none rounded-xl bg-[#FDE8EE] overflow-hidden">
                                         {item.merchandise.product.featuredImage && (
                                             <Image
                                                 src={item.merchandise.product.featuredImage.url}
@@ -71,17 +71,17 @@ export default async function CartPage() {
                                     </div>
 
                                     <div className="flex flex-1 flex-col">
-                                        <div className="flex justify-between">
+                                        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-1 sm:gap-4">
                                             <div>
-                                                <h3 className="font-semibold text-[#3D3D3D]">
+                                                <h3 className="font-semibold text-[#3D3D3D] text-sm sm:text-base line-clamp-2">
                                                     {item.merchandise.product.title}
                                                 </h3>
-                                                <p className="text-sm text-[#6B6B6B] mt-1">
+                                                <p className="text-xs sm:text-sm text-[#6B6B6B] mt-1">
                                                     {item.merchandise.title}
                                                 </p>
                                             </div>
-                                            <div className="text-right">
-                                                <p className="font-semibold text-[#D4847C] mb-2">
+                                            <div className="flex flex-row sm:flex-col items-center sm:items-end justify-between sm:justify-start gap-2 mt-1 sm:mt-0">
+                                                <p className="font-semibold text-[#D4847C] text-sm sm:text-base mb-0 sm:mb-2">
                                                     {item.cost.totalAmount.currencyCode === 'PEN' ? 'S/' : item.cost.totalAmount.currencyCode}{' '}
                                                     {parseFloat(item.cost.totalAmount.amount).toFixed(2)}
                                                 </p>

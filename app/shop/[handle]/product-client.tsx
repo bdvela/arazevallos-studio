@@ -103,8 +103,8 @@ export function ProductPageClient({ product }: ProductPageClientProps) {
                             </motion.p>
                         </div>
 
-                        {/* Description */}
-                        {descriptionHtml && (
+                        {/* Description - Hidden for Gift Cards as they have their own section */}
+                        {!isGiftCard && descriptionHtml && (
                             <motion.div
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}

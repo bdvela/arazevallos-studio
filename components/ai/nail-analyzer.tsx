@@ -139,13 +139,13 @@ export default function NailAnalyzer({ mode = 'default', onAnalysisComplete }: N
     };
 
     return (
-        <div className="w-full max-w-xl mx-auto p-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl shadow-2xl">
+        <div className="w-full max-w-xl mx-auto p-4 sm:p-6 bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl shadow-2xl">
             <div className="text-center mb-8">
                 <h2 className="text-3xl font-light text-primary mb-2">Escanea tu Vibe ✨</h2>
                 <p className="text-gray-500 font-light">Sube tu inspiración y nuestra IA te cotizará el diseño al instante.</p>
             </div>
 
-            <div className="relative overflow-hidden rounded-2xl bg-gray-50 border-2 border-dashed border-gray-200 min-h-[300px] flex flex-col items-center justify-center transition-colors hover:bg-gray-100">
+            <div className="relative overflow-hidden rounded-2xl bg-gray-50 border-2 border-dashed border-gray-200 min-h-[250px] sm:min-h-[300px] flex flex-col items-center justify-center transition-colors hover:bg-gray-100">
 
                 {/* Initial State */}
                 {!image && !isUploading && (
@@ -262,7 +262,7 @@ export default function NailAnalyzer({ mode = 'default', onAnalysisComplete }: N
                             </div>
                         </div>
 
-                        <div className="flex gap-3">
+                        <div className="flex flex-col sm:flex-row gap-3">
                             <button
                                 onClick={reset}
                                 className="px-6 py-3 rounded-xl border border-gray-200 text-gray-600 font-medium hover:bg-gray-50 transition-colors"
