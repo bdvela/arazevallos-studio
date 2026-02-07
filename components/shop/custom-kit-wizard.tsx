@@ -660,22 +660,22 @@ export function CustomKitWizard({ product }: CustomKitWizardProps) {
                                 initial={{ opacity: 0, y: 15 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                                className="bg-[#FFFBFC] border border-[#F5B5C8]/20 rounded-3xl shadow-lg shadow-pink-100/20 p-6 space-y-5"
+                                className="bg-[#FFFBFC] border border-[#F5B5C8]/20 rounded-3xl shadow-lg shadow-pink-100/20 p-5 md:p-6 space-y-6"
                             >
                                 {/* Product Header with Glow Image */}
-                                <div className="flex gap-5 items-start">
+                                <div className="flex flex-col sm:flex-row gap-5 items-center sm:items-start text-center sm:text-left">
                                     {/* Design preview with glow */}
                                     <motion.div
                                         initial={{ opacity: 0, scale: 0.9 }}
                                         animate={{ opacity: 1, scale: 1 }}
                                         transition={{ delay: 0.1 }}
-                                        className="relative group shrink-0"
+                                        className="relative group shrink-0 mx-auto sm:mx-0"
                                     >
                                         <div className="absolute -inset-1 bg-gradient-to-r from-[#D4847C] to-[#E8A0B0] rounded-2xl opacity-30 blur-md" />
-                                        <div className="relative w-24 h-24 rounded-2xl overflow-hidden ring-2 ring-white shadow-lg">
+                                        <div className="relative w-28 h-28 sm:w-24 sm:h-24 rounded-2xl overflow-hidden ring-2 ring-white shadow-lg">
                                             <img src={uploadedDesign || ''} className="w-full h-full object-cover" alt="Tu diseño" />
                                             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-2">
-                                                <span className="text-[9px] font-bold text-white uppercase tracking-wider">{analysis.tier}</span>
+                                                <span className="text-[10px] font-bold text-white uppercase tracking-wider">{analysis.tier}</span>
                                             </div>
                                         </div>
                                     </motion.div>
@@ -685,30 +685,38 @@ export function CustomKitWizard({ product }: CustomKitWizardProps) {
                                         initial={{ opacity: 0, x: 10 }}
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ delay: 0.2 }}
-                                        className="flex-1 min-w-0"
+                                        className="flex-1 w-full"
                                     >
-                                        <div className="flex items-start justify-between gap-3">
-                                            <div>
-                                                <h4 className="font-bold text-gray-800 text-lg mb-2" style={{ fontFamily: 'var(--font-playfair)' }}>
+                                        <div className="flex flex-col sm:flex-row items-center sm:items-start justify-between gap-4">
+                                            <div className="space-y-2">
+                                                <h4 className="font-bold text-gray-800 text-xl sm:text-lg mb-2" style={{ fontFamily: 'var(--font-playfair)' }}>
                                                     Kit Personalizado
                                                 </h4>
-                                                <div className="flex flex-wrap gap-2">
-                                                    <span className="inline-flex items-center gap-1 bg-white border border-[#F5B5C8]/30 text-[#6B6B6B] px-2.5 py-1 rounded-full text-xs font-medium shadow-sm">
+                                                <div className="flex flex-wrap justify-center sm:justify-start gap-2">
+                                                    <span className="inline-flex items-center gap-1 bg-white border border-[#F5B5C8]/30 text-[#6B6B6B] px-3 py-1 rounded-full text-xs font-medium shadow-sm">
                                                         <span className="w-1.5 h-1.5 rounded-full bg-[#D4847C]" />
                                                         {selectedShape}
                                                     </span>
-                                                    <span className="inline-flex items-center gap-1 bg-white border border-[#F5B5C8]/30 text-[#6B6B6B] px-2.5 py-1 rounded-full text-xs font-medium shadow-sm">
+                                                    <span className="inline-flex items-center gap-1 bg-white border border-[#F5B5C8]/30 text-[#6B6B6B] px-3 py-1 rounded-full text-xs font-medium shadow-sm">
                                                         <span className="w-1.5 h-1.5 rounded-full bg-[#E8A0B0]" />
                                                         Largo {selectedSize}
                                                     </span>
                                                 </div>
                                             </div>
-                                            {/* Hero Price */}
-                                            <div className="text-right">
+
+                                            {/* Price Section */}
+                                            <div className="text-center sm:text-right w-full sm:w-auto mt-2 sm:mt-0">
                                                 <p className="text-xs text-[#6B6B6B] mb-0.5">Total</p>
-                                                <p className="text-3xl font-bold text-[#D4847C]" style={{ fontFamily: 'var(--font-playfair)' }}>
-                                                    S/{analysis.price}
-                                                </p>
+                                                <div className="flex items-baseline justify-center sm:justify-end gap-1">
+                                                    <span className="text-base text-[#D4847C] font-semibold">S/</span>
+                                                    <span
+                                                        className="text-4xl sm:text-5xl font-bold text-[#D4847C]"
+                                                        style={{ fontFamily: 'var(--font-playfair), serif' }}
+                                                    >
+                                                        {analysis.price}
+                                                    </span>
+                                                    <span className="text-lg text-[#D4847C] font-medium">.00</span>
+                                                </div>
                                             </div>
                                         </div>
                                     </motion.div>
