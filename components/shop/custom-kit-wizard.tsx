@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AnalysisResult } from '@/lib/ai/analysis-service';
 import NailAnalyzer from '@/components/ai/nail-analyzer';
@@ -96,6 +96,17 @@ export function CustomKitWizard({ product }: CustomKitWizardProps) {
     // UI state
     const [isAddingToCart, setIsAddingToCart] = useState(false);
     const [error, setError] = useState<string | null>(null);
+
+    // Ref for auto-scrolling
+    const wizardRef = useRef<HTMLDivElement>(null);
+
+    // Auto-scroll to top of wizard on step change
+    useEffect(() => {
+        if (wizardRef.current) {
+            const y = wizardRef.current.getBoundingClientRect().top + window.scrollY - 120; // 120px offset for header
+            window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+    }, [step]);
 
     // Persist state to localStorage
     useEffect(() => {
@@ -306,7 +317,7 @@ export function CustomKitWizard({ product }: CustomKitWizardProps) {
     );
 
     return (
-        <div className="bg-white rounded-3xl border border-pink-100 shadow-xl overflow-hidden min-h-[600px] flex flex-col">
+        <div ref={wizardRef} className="bg-white rounded-3xl border border-pink-100 shadow-xl overflow-hidden min-h-[600px] flex flex-col">
             <div className="p-4 md:p-6 flex-1">
                 <ProgressStepper />
                 <AnimatePresence>
