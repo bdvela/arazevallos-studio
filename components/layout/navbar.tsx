@@ -112,17 +112,6 @@ export function Navbar() {
                             >
                                 <Instagram className="w-5 h-5" />
                             </motion.a>
-                            <motion.a
-                                whileHover={{ scale: 1.1, rotate: -5 }}
-                                whileTap={{ scale: 0.95 }}
-                                href="https://wa.link/b5c2z6"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="p-2 text-[#6B6B6B] hover:text-[#25D366] transition-colors"
-                                aria-label="WhatsApp"
-                            >
-                                <MessageCircle className="w-5 h-5" />
-                            </motion.a>
                         </div>
 
                         {/* Cart */}
