@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { SizingSection } from '@/components/shop/sizing-section';
 import { CustomKitWizard } from '@/components/shop/custom-kit-wizard';
 import { GiftCardSection } from '@/components/shop/gift-card-section';
+import { StandardProductSection } from '@/components/shop/standard-product-section';
 import DOMPurify from 'isomorphic-dompurify';
 import { ArrowLeft, Truck, Shield, Sparkles, Check } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -24,8 +25,16 @@ export function ProductPageClient({ product }: ProductPageClientProps) {
 
     const isGiftCard = productType === 'Gift Cards' || productType === 'Gift Card' || title.toLowerCase().includes('gift card') || title.toLowerCase().includes('tarjeta de regalo');
 
-    // Detect if this is a custom/personalized product (has variable pricing from AI tiers)
-    const isCustomProduct = isVariable && !isGiftCard;
+    // Detect if this is a custom/personalized product
+    // Custom products have "personalizado" or "custom" in the title/handle
+    const isCustomProduct =
+        product.handle?.toLowerCase().includes('personalizado') ||
+        product.handle?.toLowerCase().includes('custom') ||
+        title.toLowerCase().includes('personalizado') ||
+        title.toLowerCase().includes('custom');
+
+    // Standard product = not a gift card and not a custom product
+    const isStandardProduct = !isGiftCard && !isCustomProduct;
 
     return (
         <div className="bg-[#FFFBFC] min-h-screen">
@@ -90,16 +99,22 @@ export function ProductPageClient({ product }: ProductPageClientProps) {
                                 {title}
                             </motion.h1>
 
-                            <motion.p
+                            <motion.div
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ delay: 0.4 }}
-                                className="mt-4 text-2xl font-bold bg-gradient-to-r from-[#D4847C] to-[#E8A0B0] bg-clip-text text-transparent flex items-baseline gap-2"
-                            >|
-                                {isVariable && <span className="text-xl text-gray-400 font-medium">Desde</span>}
-                                {currencyCode === 'PEN' ? 'S/' : currencyCode === 'USD' ? '$' : currencyCode}{' '}
-                                {parseFloat(price).toFixed(2)}
-                            </motion.p>
+                                className="mt-4 flex items-center gap-3"
+                            >
+                                {isVariable && (
+                                    <span className="text-xs uppercase tracking-wider text-[#D4847C] font-semibold bg-[#FDE8EE] px-3 py-1 rounded-full">
+                                        Desde
+                                    </span>
+                                )}
+                                <p className="text-2xl font-bold bg-gradient-to-r from-[#D4847C] to-[#E8A0B0] bg-clip-text text-transparent">
+                                    {currencyCode === 'PEN' ? 'S/' : currencyCode === 'USD' ? '$' : currencyCode}{' '}
+                                    {parseFloat(price).toFixed(2)}
+                                </p>
+                            </motion.div>
                         </div>
 
                         {/* Description - Hidden for Gift Cards as they have their own section */}
@@ -124,8 +139,10 @@ export function ProductPageClient({ product }: ProductPageClientProps) {
                         >
                             {isGiftCard ? (
                                 <GiftCardSection product={product} />
-                            ) : (
+                            ) : isCustomProduct ? (
                                 <CustomKitWizard product={product} />
+                            ) : (
+                                <StandardProductSection product={product} />
                             )}
                         </motion.div>
                         {/* Benefits */}
@@ -174,7 +191,7 @@ export function ProductPageClient({ product }: ProductPageClientProps) {
                         )}
                     </motion.div>
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 }

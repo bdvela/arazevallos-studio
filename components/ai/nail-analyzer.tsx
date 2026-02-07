@@ -23,6 +23,14 @@ export default function NailAnalyzer({ mode = 'default', onAnalysisComplete }: N
     const [selectedSize, setSelectedSize] = useState<string>('');
     const SIZES = ['XS', 'S', 'M', 'L'];
 
+    // Helper function to show toast notifications
+    const showNotification = (title: string, message: string, type: 'success' | 'error' | 'warning' = 'error') => {
+        const event = new CustomEvent('cart-updated', {
+            detail: { title, message, type }
+        });
+        window.dispatchEvent(event);
+    };
+
     const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (!file) return;
@@ -60,6 +68,7 @@ export default function NailAnalyzer({ mode = 'default', onAnalysisComplete }: N
 
         } catch (err) {
             console.error(err);
+            showNotification('❌ Error de carga', 'Hubo un problema subiendo tu imagen. Intenta de nuevo.', 'error');
             setError('Hubo un problema subiendo tu imagen. Intenta de nuevo.');
             setIsUploading(false);
         }
@@ -78,7 +87,9 @@ export default function NailAnalyzer({ mode = 'default', onAnalysisComplete }: N
             const data: AnalysisResult = await res.json();
 
             if (!data.isValid) {
-                setError(data.validationError || 'La imagen no parece ser un diseño de uñas.');
+                const errorMessage = data.validationError || 'La imagen no parece ser un diseño de uñas.';
+                showNotification('📷 Imagen no válida', errorMessage, 'warning');
+                setError(errorMessage);
                 setResult(null);
                 setIsAnalyzing(false); // Stop analyzing if invalid
             } else {
@@ -94,6 +105,7 @@ export default function NailAnalyzer({ mode = 'default', onAnalysisComplete }: N
 
         } catch (err) {
             console.error(err);
+            showNotification('❌ Error de análisis', 'No pudimos analizar el diseño. Intenta con otra foto más clara.', 'error');
             setError('No pudimos analizar el diseño. Intenta con otra foto más clara.');
         } finally {
             if (mode !== 'wizard') {

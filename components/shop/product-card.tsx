@@ -13,6 +13,8 @@ export function ProductCard({ product, collectionConfig }: ProductCardProps) {
     const { handle, title, featuredImage, priceRange, collections } = product;
     const price = priceRange?.minVariantPrice?.amount;
     const currencyCode = priceRange?.minVariantPrice?.currencyCode;
+    const maxPrice = priceRange?.maxVariantPrice?.amount;
+    const isVariablePrice = maxPrice && parseFloat(maxPrice) > parseFloat(price);
 
     // Get the first non-home-page collection for badge
     const primaryCollection = collections?.find((c: any) =>
@@ -71,14 +73,21 @@ export function ProductCard({ product, collectionConfig }: ProductCardProps) {
                     </div>
                 </div>
 
-                <div className="mt-4 space-y-1">
+                <div className="mt-4 space-y-1.5">
                     <h3 className="text-[#3D3D3D] font-medium group-hover:text-[#D4847C] transition-colors line-clamp-1">
                         {title}
                     </h3>
-                    <p className="text-lg font-bold bg-gradient-to-r from-[#D4847C] to-[#E8A0B0] bg-clip-text text-transparent">
-                        {currencyCode === 'PEN' ? 'S/' : currencyCode === 'USD' ? '$' : currencyCode}{' '}
-                        {parseFloat(price).toFixed(2)}
-                    </p>
+                    <div className="flex items-center gap-2">
+                        {isVariablePrice && (
+                            <span className="text-[10px] uppercase tracking-wider text-[#D4847C] font-semibold bg-[#FDE8EE] px-2 py-0.5 rounded-full">
+                                Desde
+                            </span>
+                        )}
+                        <p className="text-lg font-bold bg-gradient-to-r from-[#D4847C] to-[#E8A0B0] bg-clip-text text-transparent">
+                            {currencyCode === 'PEN' ? 'S/' : currencyCode === 'USD' ? '$' : currencyCode}{' '}
+                            {parseFloat(price).toFixed(2)}
+                        </p>
+                    </div>
                 </div>
             </motion.div>
         </Link>

@@ -6,7 +6,8 @@ import { AnalysisResult } from '@/lib/ai/analysis-service';
 import NailAnalyzer from '@/components/ai/nail-analyzer';
 import {
     Check, ChevronRight, ShoppingBag, Loader2, Sparkles,
-    ArrowRight, ArrowLeft, Settings, CheckCircle2, Camera, AlertCircle
+    ArrowRight, ArrowLeft, Settings, CheckCircle2, Camera, AlertCircle,
+    Clock, Package, MessageCircle
 } from 'lucide-react';
 import { addItem } from '@/lib/shopify/actions';
 import { SizingUploader } from '../sizing/sizing-uploader';
@@ -370,23 +371,121 @@ export function CustomKitWizard({ product }: CustomKitWizardProps) {
                         >
                             <BackButton />
 
-                            {/* Analysis Summary Card */}
+                            {/* ✨ Premium Quote Card - Luxury Design */}
                             <motion.div
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                className="bg-gradient-to-r from-[#FDE8EE] to-white p-4 rounded-xl flex items-center justify-between border border-pink-200 shadow-sm"
+                                initial={{ opacity: 0, y: 15, scale: 0.98 }}
+                                animate={{ opacity: 1, y: 0, scale: 1 }}
+                                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                                className="relative overflow-hidden"
                             >
-                                <div className="flex items-center gap-3">
-                                    <div className="w-14 h-14 rounded-lg overflow-hidden border-2 border-white shadow-md">
-                                        <img src={uploadedDesign || ''} alt="Diseño" className="w-full h-full object-cover" />
+                                {/* Card with white background */}
+                                <div className="relative bg-gradient-to-b from-[#FDE8EE] to-white p-6 rounded-3xl border border-[#F5B5C8]/20 shadow-lg shadow-pink-100/20">
+
+                                    {/* Content wrapper */}
+                                    <div className="relative z-10">
+                                        {/* Header with IA badge */}
+                                        <div className="flex items-center justify-between mb-4">
+                                            <motion.div
+                                                initial={{ opacity: 0, x: -10 }}
+                                                animate={{ opacity: 1, x: 0 }}
+                                                transition={{ delay: 0.2 }}
+                                                className="flex items-center gap-2"
+                                            >
+                                                <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-[#D4847C] to-[#E8A0B0] animate-pulse" />
+                                                <span className="text-[10px] uppercase tracking-[0.2em] text-[#6B6B6B] font-medium">
+                                                    Cotización Inteligente
+                                                </span>
+                                            </motion.div>
+                                            <motion.div
+                                                initial={{ opacity: 0, scale: 0.8 }}
+                                                animate={{ opacity: 1, scale: 1 }}
+                                                transition={{ delay: 0.3, type: "spring" }}
+                                                className="flex items-center gap-1.5 bg-gradient-to-r from-[#D4847C] to-[#E8A0B0] text-white px-3 py-1 rounded-full shadow-lg shadow-pink-200/50"
+                                            >
+                                                <Sparkles className="w-3 h-3" />
+                                                <span className="text-[10px] font-bold tracking-wide">Powered by IA</span>
+                                            </motion.div>
+                                        </div>
+
+                                        {/* Main content - Image + Price */}
+                                        <div className="flex gap-5 items-center">
+                                            {/* Design preview with glow effect */}
+                                            <motion.div
+                                                initial={{ opacity: 0, scale: 0.9 }}
+                                                animate={{ opacity: 1, scale: 1 }}
+                                                transition={{ delay: 0.15 }}
+                                                className="relative group"
+                                            >
+                                                {/* Glow effect */}
+                                                <div className="absolute -inset-1 bg-gradient-to-r from-[#D4847C] to-[#E8A0B0] rounded-2xl opacity-30 blur-md group-hover:opacity-50 transition-opacity" />
+
+                                                <div className="relative w-24 h-24 rounded-2xl overflow-hidden ring-2 ring-white shadow-lg">
+                                                    <img
+                                                        src={uploadedDesign || ''}
+                                                        alt="Tu diseño"
+                                                        className="w-full h-full object-cover"
+                                                    />
+                                                    {/* Overlay with tier */}
+                                                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent p-2">
+                                                        <span className="text-[9px] font-bold text-white uppercase tracking-wider drop-shadow-lg">
+                                                            {analysis.tier}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </motion.div>
+
+                                            {/* Price section - Hero style */}
+                                            <motion.div
+                                                initial={{ opacity: 0, x: 10 }}
+                                                animate={{ opacity: 1, x: 0 }}
+                                                transition={{ delay: 0.25 }}
+                                                className="flex-1"
+                                            >
+                                                <p className="text-xs text-[#6B6B6B] mb-1">Tu precio personalizado</p>
+                                                <div className="flex items-baseline gap-1">
+                                                    <span className="text-base text-[#D4847C] font-semibold">S/</span>
+                                                    <span
+                                                        className="text-5xl font-bold text-[#D4847C]"
+                                                        style={{ fontFamily: 'var(--font-playfair), serif' }}
+                                                    >
+                                                        {analysis.price}
+                                                    </span>
+                                                    <span className="text-xl text-[#D4847C] font-medium">.00</span>
+                                                </div>
+                                                {/* Small trust indicator */}
+                                                <div className="flex items-center gap-1.5 mt-2">
+                                                    <div className="w-4 h-4 rounded-full bg-[#FDE8EE] flex items-center justify-center">
+                                                        <Check className="w-2.5 h-2.5 text-[#D4847C]" />
+                                                    </div>
+                                                    <span className="text-[10px] text-[#6B6B6B]">Precio calculado por IA</span>
+                                                </div>
+                                            </motion.div>
+                                        </div>
+
+                                        {/* AI Analysis reason - Premium quote style */}
+                                        {analysis.reason && (
+                                            <motion.div
+                                                initial={{ opacity: 0, y: 10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                transition={{ delay: 0.4 }}
+                                                className="mt-5 pt-4 border-t border-[#F5B5C8]/30"
+                                            >
+                                                <div className="flex gap-3">
+                                                    <div className="shrink-0 w-8 h-8 rounded-full bg-gradient-to-br from-[#FDE8EE] to-white flex items-center justify-center shadow-sm">
+                                                        <Sparkles className="w-4 h-4 text-[#D4847C]" />
+                                                    </div>
+                                                    <div className="flex-1 min-w-0">
+                                                        <p className="text-[10px] uppercase tracking-wider text-[#D4847C] font-semibold mb-1">
+                                                            Análisis de complejidad
+                                                        </p>
+                                                        <p className="text-xs text-[#6B6B6B] leading-relaxed">
+                                                            {analysis.reason}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </motion.div>
+                                        )}
                                     </div>
-                                    <div>
-                                        <p className="text-xs text-[#D4847C] font-bold uppercase tracking-wider">{analysis.tier}</p>
-                                        <p className="text-xl font-bold text-gray-800">S/ {analysis.price}.00</p>
-                                    </div>
-                                </div>
-                                <div className="text-right hidden sm:block">
-                                    <span className="text-xs text-gray-400 block">Cotización</span>
                                 </div>
                             </motion.div>
 
@@ -556,57 +655,157 @@ export function CustomKitWizard({ product }: CustomKitWizardProps) {
                                 </h3>
                             </div>
 
-                            {/* Order Summary Card */}
-                            <div className="bg-white border border-gray-200 rounded-2xl shadow-md p-6 space-y-4">
-                                {/* Design Header */}
-                                <div className="flex gap-4 pb-4 border-b border-gray-100">
-                                    <div className="w-24 h-24 rounded-xl overflow-hidden border-2 border-gray-100 shadow-sm flex-shrink-0">
-                                        <img src={uploadedDesign || ''} className="w-full h-full object-cover" alt="Diseño personalizado" />
-                                    </div>
-                                    <div className="flex-1 min-w-0">
-                                        <h4 className="font-bold text-gray-800 text-lg mb-1">Kit Personalizado</h4>
-                                        <p className="text-[#D4847C] font-semibold text-sm mb-2">{analysis.tier}</p>
-                                        <div className="text-sm text-gray-500 space-y-1">
-                                            <p>Forma: <span className="text-gray-800 font-medium">{selectedShape}</span></p>
-                                            <p>Largo: <span className="text-gray-800 font-medium">{selectedSize}</span></p>
+                            {/* ✨ Premium Order Summary Card */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 15 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                                className="bg-[#FFFBFC] border border-[#F5B5C8]/20 rounded-3xl shadow-lg shadow-pink-100/20 p-6 space-y-5"
+                            >
+                                {/* Product Header with Glow Image */}
+                                <div className="flex gap-5 items-start">
+                                    {/* Design preview with glow */}
+                                    <motion.div
+                                        initial={{ opacity: 0, scale: 0.9 }}
+                                        animate={{ opacity: 1, scale: 1 }}
+                                        transition={{ delay: 0.1 }}
+                                        className="relative group shrink-0"
+                                    >
+                                        <div className="absolute -inset-1 bg-gradient-to-r from-[#D4847C] to-[#E8A0B0] rounded-2xl opacity-30 blur-md" />
+                                        <div className="relative w-24 h-24 rounded-2xl overflow-hidden ring-2 ring-white shadow-lg">
+                                            <img src={uploadedDesign || ''} className="w-full h-full object-cover" alt="Tu diseño" />
+                                            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-2">
+                                                <span className="text-[9px] font-bold text-white uppercase tracking-wider">{analysis.tier}</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className="text-right flex-shrink-0">
-                                        <span className="block text-2xl font-bold text-[#D4847C]">S/ {analysis.price}</span>
-                                        <span className="text-xs text-gray-400">Soles</span>
-                                    </div>
+                                    </motion.div>
+
+                                    {/* Product Info */}
+                                    <motion.div
+                                        initial={{ opacity: 0, x: 10 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: 0.2 }}
+                                        className="flex-1 min-w-0"
+                                    >
+                                        <div className="flex items-start justify-between gap-3">
+                                            <div>
+                                                <h4 className="font-bold text-gray-800 text-lg mb-2" style={{ fontFamily: 'var(--font-playfair)' }}>
+                                                    Kit Personalizado
+                                                </h4>
+                                                <div className="flex flex-wrap gap-2">
+                                                    <span className="inline-flex items-center gap-1 bg-white border border-[#F5B5C8]/30 text-[#6B6B6B] px-2.5 py-1 rounded-full text-xs font-medium shadow-sm">
+                                                        <span className="w-1.5 h-1.5 rounded-full bg-[#D4847C]" />
+                                                        {selectedShape}
+                                                    </span>
+                                                    <span className="inline-flex items-center gap-1 bg-white border border-[#F5B5C8]/30 text-[#6B6B6B] px-2.5 py-1 rounded-full text-xs font-medium shadow-sm">
+                                                        <span className="w-1.5 h-1.5 rounded-full bg-[#E8A0B0]" />
+                                                        Largo {selectedSize}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            {/* Hero Price */}
+                                            <div className="text-right">
+                                                <p className="text-xs text-[#6B6B6B] mb-0.5">Total</p>
+                                                <p className="text-3xl font-bold text-[#D4847C]" style={{ fontFamily: 'var(--font-playfair)' }}>
+                                                    S/{analysis.price}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </motion.div>
                                 </div>
 
-                                {/* Measurement Status */}
-                                <div className={`p-3 rounded-lg text-sm flex items-center gap-2 ${sendPhotosLater
-                                    ? 'bg-orange-50 border border-orange-200 text-orange-700'
-                                    : 'bg-green-50 border border-green-200 text-green-700'
-                                    }`}>
+                                {/* Divider */}
+                                <div className="h-px bg-gradient-to-r from-transparent via-[#F5B5C8]/40 to-transparent" />
+
+                                {/* Measurement Status - Premium Style */}
+                                <motion.div
+                                    initial={{ opacity: 0, y: 5 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.3 }}
+                                    className={`rounded-2xl border ${sendPhotosLater
+                                        ? 'bg-[#FFF8F0] border-[#F5B5C8]/30 p-4'
+                                        : 'bg-white border-[#F5B5C8]/20 p-3.5 flex items-center gap-3'
+                                        }`}
+                                >
                                     {sendPhotosLater ? (
-                                        <>
-                                            <Camera className="w-4 h-4 flex-shrink-0" />
-                                            <span className="text-xs">Medidas pendientes (enviar por WhatsApp)</span>
-                                        </>
+                                        <div className="w-full space-y-3">
+                                            <div className="flex items-center gap-2 text-orange-800/90">
+                                                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#E8A0B0] to-[#D4847C] flex items-center justify-center shadow-sm">
+                                                    <Camera className="w-4 h-4 text-white" />
+                                                </div>
+                                                <span className="font-semibold text-sm">Medidas pendientes</span>
+                                            </div>
+
+                                            <div className="bg-white/80 rounded-xl p-3 text-xs text-gray-600 space-y-2 border border-orange-100 shadow-sm">
+                                                <p className="font-medium text-[#D4847C] flex items-center gap-1.5">
+                                                    <AlertCircle className="w-3.5 h-3.5" />
+                                                    Instrucciones post-compra:
+                                                </p>
+                                                <ul className="list-disc pl-4 space-y-1.5 leading-relaxed marker:text-[#D4847C]">
+                                                    <li>Finaliza tu compra.</li>
+                                                    <li>Busca el número que empieza con <strong>#</strong> en tu confirmación (ej: #1024).</li>
+                                                    <li>Envíanos ese número junto con las fotos de tus medidas.</li>
+                                                </ul>
+                                                <div className="pt-2">
+                                                    <a
+                                                        href="https://wa.me/51950009664?text=Hola%20Ara%2C%20quisiera%20enviar%20mis%20medidas%20para%20mi%20pedido.%20Mi%20n%C3%BAmero%20de%20pedido%20es%3A%20"
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="flex items-center justify-center gap-2 text-white font-bold bg-[#25D366] px-4 py-2.5 rounded-xl hover:bg-[#20bd5a] transition-colors w-full shadow-sm hover:shadow-md"
+                                                    >
+                                                        <MessageCircle className="w-4 h-4" />
+                                                        Contactar por WhatsApp
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
                                     ) : (
                                         <>
-                                            <CheckCircle2 className="w-4 h-4 flex-shrink-0" />
-                                            <span className="text-xs">{handPhotos.length} fotos de medidas adjuntas</span>
+                                            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#D4847C] to-[#E8A0B0] flex items-center justify-center shadow-sm shrink-0">
+                                                <CheckCircle2 className="w-4 h-4 text-white" />
+                                            </div>
+                                            <div className="flex-1">
+                                                <p className="text-sm font-medium text-gray-800">
+                                                    {handPhotos.length} fotos adjuntadas
+                                                </p>
+                                                <p className="text-[11px] text-[#6B6B6B]">
+                                                    Listas para fabricación
+                                                </p>
+                                            </div>
+                                            <div className="w-5 h-5 rounded-full bg-green-100 flex items-center justify-center shrink-0">
+                                                <Check className="w-3 h-3 text-green-600" />
+                                            </div>
                                         </>
                                     )}
-                                </div>
+                                </motion.div>
 
-                                {/* Order Info */}
-                                <div className="pt-4 border-t border-gray-100 text-sm text-gray-500 space-y-2">
-                                    <div className="flex justify-between">
-                                        <span>Tiempo estimado:</span>
-                                        <span className="font-medium text-gray-800">3-5 días hábiles</span>
+                                {/* Order Details Grid */}
+                                <motion.div
+                                    initial={{ opacity: 0, y: 5 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.4 }}
+                                    className="grid grid-cols-2 gap-3"
+                                >
+                                    <div className="bg-white border border-[#F5B5C8]/20 rounded-xl p-3.5 shadow-sm">
+                                        <div className="flex items-center gap-2 mb-1.5">
+                                            <div className="w-6 h-6 rounded-full bg-[#FDE8EE] flex items-center justify-center">
+                                                <Clock className="w-3 h-3 text-[#D4847C]" />
+                                            </div>
+                                            <span className="text-[10px] uppercase tracking-wider text-[#6B6B6B] font-medium">Entrega</span>
+                                        </div>
+                                        <p className="text-sm font-bold text-gray-800">3-5 días</p>
                                     </div>
-                                    <div className="flex justify-between">
-                                        <span>Incluye:</span>
-                                        <span className="font-medium text-gray-800">Kit completo + pegamento</span>
+                                    <div className="bg-white border border-[#F5B5C8]/20 rounded-xl p-3.5 shadow-sm">
+                                        <div className="flex items-center gap-2 mb-1.5">
+                                            <div className="w-6 h-6 rounded-full bg-[#FDE8EE] flex items-center justify-center">
+                                                <Package className="w-3 h-3 text-[#D4847C]" />
+                                            </div>
+                                            <span className="text-[10px] uppercase tracking-wider text-[#6B6B6B] font-medium">Incluye</span>
+                                        </div>
+                                        <p className="text-sm font-bold text-gray-800">Kit completo</p>
                                     </div>
-                                </div>
-                            </div>
+                                </motion.div>
+                            </motion.div>
 
                             {/* Final CTA */}
                             <motion.button

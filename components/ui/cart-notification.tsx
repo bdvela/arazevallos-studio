@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 // Notification types with specific styling and behavior
-type NotificationType = 'success' | 'delete' | 'error' | 'info';
+type NotificationType = 'success' | 'delete' | 'error' | 'info' | 'warning';
 
 interface NotificationConfig {
     icon: React.ReactNode;
@@ -38,6 +38,13 @@ const notificationConfigs: Record<NotificationType, NotificationConfig> = {
         iconBg: 'bg-red-100',
         iconColor: 'text-red-600',
         accentColor: 'from-red-500 to-red-600',
+    },
+    warning: {
+        icon: <AlertCircle size={20} />,
+        bgColor: 'bg-white',
+        iconBg: 'bg-amber-100',
+        iconColor: 'text-amber-600',
+        accentColor: 'from-amber-400 to-orange-500',
     },
     info: {
         icon: <ShoppingBag size={20} />,
