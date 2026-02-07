@@ -99,13 +99,29 @@ export function CustomKitWizard({ product }: CustomKitWizardProps) {
 
     // Ref for auto-scrolling
     const wizardRef = useRef<HTMLDivElement>(null);
+    // Track the previous step to detect real changes (not initial render)
+    const previousStepRef = useRef<WizardStep | null>(null);
+    // Track if component has hydrated (mounted on client)
+    const isHydrated = useRef(false);
 
-    // Auto-scroll to top of wizard on step change
+    // Auto-scroll to top of wizard on step change (only after real user interaction)
     useEffect(() => {
-        if (wizardRef.current) {
-            const y = wizardRef.current.getBoundingClientRect().top + window.scrollY - 120; // 120px offset for header
-            window.scrollTo({ top: y, behavior: 'smooth' });
+        // Skip during hydration / first render
+        if (!isHydrated.current) {
+            isHydrated.current = true;
+            previousStepRef.current = step;
+            return;
         }
+
+        // Only scroll if step actually changed from a previous value
+        if (previousStepRef.current !== null && previousStepRef.current !== step) {
+            if (wizardRef.current) {
+                const y = wizardRef.current.getBoundingClientRect().top + window.scrollY - 120;
+                window.scrollTo({ top: y, behavior: 'smooth' });
+            }
+        }
+
+        previousStepRef.current = step;
     }, [step]);
 
     // Persist state to localStorage
