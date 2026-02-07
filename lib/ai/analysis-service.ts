@@ -33,9 +33,9 @@ const TIER_PRICES: Record<DesignTier, number> = {
 
 // Mapping for Shopify Variants
 const TIER_VARIANT_KEYS: Record<DesignTier, string> = {
-    BASIC: 'SHOPIFY_VARIANT_ID_55',
-    INTERMEDIATE: 'SHOPIFY_VARIANT_ID_70',
-    PRO: 'SHOPIFY_VARIANT_ID_85'
+    BASIC: 'SHOPIFY_VARIANT_ID_BASIC',
+    INTERMEDIATE: 'SHOPIFY_VARIANT_ID_INTERMEDIATE',
+    PRO: 'SHOPIFY_VARIANT_ID_PRO'
 };
 
 export async function analyzeNailDesign(imageUrl: string): Promise<AnalysisResult> {

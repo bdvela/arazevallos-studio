@@ -140,7 +140,24 @@ export async function getCart(cartId: string): Promise<any | undefined> {
     return res.cart;
 }
 
-import { getCollectionsQuery, getCollectionQuery, getProductsWithCollectionsQuery } from './queries';
+
+import { getCollectionsQuery, getCollectionQuery, getProductsWithCollectionsQuery, getPoliciesQuery } from './queries';
+
+export async function getPolicies(): Promise<any[]> {
+    const res = await shopifyFetch<any>({
+        query: getPoliciesQuery,
+        tags: ['policies']
+    });
+
+    const shop = res.shop;
+    return [
+        { ...shop.privacyPolicy, handle: 'privacy-policy' },
+        { ...shop.termsOfService, handle: 'terms-of-service' },
+        { ...shop.refundPolicy, handle: 'refund-policy' },
+        { ...shop.shippingPolicy, handle: 'shipping-policy' }
+    ].filter(p => p.body);
+}
+
 
 export async function getCollections(): Promise<any[]> {
     const res = await shopifyFetch<any>({

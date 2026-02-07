@@ -20,6 +20,12 @@ const footerLinks = {
         { label: 'Cejas' },
         { label: 'Pedicure' },
     ],
+    legales: [
+        { href: '/policies/privacy-policy', label: 'Política de Privacidad' },
+        { href: '/policies/terms-of-service', label: 'Términos de Servicio' },
+        { href: '/policies/shipping-policy', label: 'Política de Envíos' },
+        { href: '/policies/refund-policy', label: 'Política de Reembolso' },
+    ],
 };
 
 export function Footer() {
@@ -169,14 +175,28 @@ export function Footer() {
             {/* Bottom Bar */}
             <div className="relative z-10 border-t border-white/10">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6">
-                    <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-                        <p className="text-xs text-gray-500">
-                            &copy; {new Date().getFullYear()} Ara Zevallos Studio. Todos los derechos reservados.
-                        </p>
+                    <div className="flex flex-col md:flex-col lg:flex-row justify-between items-center gap-4 sm:gap-6">
+                        <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8 text-center md:text-left">
+                            <p className="text-xs text-gray-500">
+                                &copy; {new Date().getFullYear()} Ara Zevallos Studio. Todos los derechos reservados.
+                            </p>
+                            <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
+                                {footerLinks.legales.map((link) => (
+                                    <Link
+                                        key={link.href}
+                                        href={link.href}
+                                        className="text-xs text-gray-400 hover:text-[#F5B5C8] transition-colors"
+                                    >
+                                        {link.label}
+                                    </Link>
+                                ))}
+                            </div>
+                        </div>
+
                         <p className="text-xs text-gray-500">
                             Desarrollado con <span className="text-[#F5B5C8]">♥</span> por{' '}
                             <a
-                                href="https://bdvela.github.io"
+                                href="https://bdvela.com"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-gray-400 hover:text-[#F5B5C8] transition-colors"

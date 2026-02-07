@@ -97,3 +97,30 @@ export const getProductsWithCollectionsQuery = /* GraphQL */ `
     }
   }
 `;
+
+export const getPoliciesQuery = /* GraphQL */ `
+  query getPolicies {
+    shop {
+      privacyPolicy {
+        body
+        title
+        handle
+      }
+      termsOfService {
+        body
+        title
+        handle
+      }
+      refundPolicy {
+        body
+        title
+        handle
+      }
+      shippingPolicy {
+        body
+        title
+        handle
+      }
+    }
+  }
+`;

@@ -1,6 +1,6 @@
 'use client';
 
-import { Sparkles, Star, Palette, Eye, FootprintsIcon, EyeClosed } from "lucide-react";
+import { Sparkles, Star, Palette, Eye, FootprintsIcon, EyeClosed, MessageCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { StaggerContainer, StaggerItem } from "@/components/ui/motion";
 import { Section, SectionHeader } from "@/components/ui/section";
@@ -45,6 +45,10 @@ const services = [
         features: ["Spa para pies", "Hidratación profunda", "Diseños opcionales"],
     },
 ];
+
+import { Metadata } from "next";
+
+
 
 export default function ServicesPage() {
     return (
@@ -111,6 +115,20 @@ export default function ServicesPage() {
                                         </li>
                                     ))}
                                 </ul>
+
+                                <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-100">
+                                    <motion.a
+                                        whileHover={{ scale: 1.02 }}
+                                        whileTap={{ scale: 0.98 }}
+                                        href={`https://wa.me/51950009664?text=Hola Ara, quisiera reservar una cita para: ${service.title}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="w-full inline-flex items-center justify-center gap-2 bg-[#3D3D3D] text-white py-2.5 sm:py-3 rounded-xl font-medium text-sm hover:bg-[#D4847C] transition-colors group-hover:shadow-lg group-hover:shadow-[#D4847C]/20"
+                                    >
+                                        <MessageCircle className="w-4 h-4" />
+                                        Reservar Cita
+                                    </motion.a>
+                                </div>
                             </motion.div>
                         </StaggerItem>
                     ))}

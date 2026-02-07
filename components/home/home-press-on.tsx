@@ -91,7 +91,7 @@ export function HomePressOn() {
                         </h2>
 
                         <p className="text-lg text-[#6B6B6B] leading-relaxed">
-                            Uñas postizas premium diseñadas a mano con los mejores materiales.
+                            Uñas premium diseñadas a mano con los mejores materiales.
                             Fáciles de aplicar, reutilizables y con envío a todo el Perú.
                         </p>
 
